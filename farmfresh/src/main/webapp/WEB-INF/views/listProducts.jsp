@@ -14,15 +14,15 @@
 				<div class="col-lg-12">
 					<c:if test="${userClickedAllProducts == true}">
 						<ol class="breadcrumb">
-							<li><a href="${contextRoot}/home">Home</a></li> / 
+							<li><a href="${contextRoot}/home">Home</a></li>&nbsp;/&nbsp; 
 							<li class="active">All Products</li>
 						</ol>
 					</c:if>
 
 					<c:if test="${userClickedCategoryProducts == true}">
 						<ol class="breadcrumb">
-							<li><a href="${contextRoot}/home">Home</a></li> / 
-							<li class="active">Category</li> / 
+							<li><a href="${contextRoot}/home">Home</a></li>&nbsp;/&nbsp;
+							<li class="active">Category</li>&nbsp;/&nbsp;
 							<li class="active">${category.name}</li>
 						</ol>
 					</c:if>

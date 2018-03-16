@@ -6,7 +6,13 @@ import com.netsky.farmbackend.dto.Category;
 
 public interface CategoryDAO {
 
-	List<Category> list();
-	
-	Category get(int id);
+	public List<Category> list();
+
+	public Category get(int id);
+
+	public boolean add(Category category);
+
+	public boolean update(Category category);
+
+	public boolean delete(Category category);
 }
