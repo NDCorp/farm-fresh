@@ -21,6 +21,7 @@
 	<title>Farm Fresh - ${title}</title>
 	<script>
 		window.menu = '${title}';
+		window.contextRoot = '${contextRoot}'; 
 	</script>
     <!-- Icon must be changed, Ref from: https://pngtree.com/freepng/farm_733892.html -->
     <link type="image/x-icon" rel="icon" href="${images}/icon.ico">
@@ -30,7 +31,6 @@
     <meta name="description" content="Free Template by Free-Template.co Custoomized for Capstone project - Conestoga College" />
     <meta name="keywords" content="free bootstrap 4, free bootstrap 4 template, free website templates, free html5, free template, free website template, html5, css3, mobile first, responsive" />
     <meta name="author" content="Free-Template.co Custoomized for Capstone project - Conestoga College" />
-
     <link rel="stylesheet" href="${css}/style.css">
 
     <!-- jQuery, Custom js, and Bootstrap js -->
@@ -67,6 +67,9 @@
     
     
     <!-- To remove if remote links work properly -->
+
+<!-- DataTable CSS -->
+<link href="${css}/dataTables.bootstrap.css" rel="stylesheet">
 
     <!-- Google fonts, Bootstrap, Custom CSS -->
     <!-- 
@@ -157,6 +160,11 @@
 			<c:if test="${userClickedAllProducts == true or userClickedCategoryProducts == true}">
 				<%@include file="listProducts.jsp"%>
 			</c:if>
+			
+			<!-- Load when your clicked show product -->
+			<c:if test="${userClickShowProduct == true}">
+				<%@include file="singleProduct.jsp"%>
+			</c:if>
 
 		</div>
 
@@ -167,9 +175,12 @@
 		<!-- Bootstrap core JavaScript -->
 		<!-- <script src="${js}/jquery.js"></script> -->
 		<!-- <script src="${js}/bootstrap.bundle.min.js"></script> -->
+		
+		<!-- Data Table -->
+		<script src="${js}/jquery.dataTables.js"></script>
 
 		<!-- Custom Javascript -->
-		<!-- <script src="${js}/myapp.js"></script> -->
+		<script src="${js}/myapp.js"></script> 
 
 	</div>
 	

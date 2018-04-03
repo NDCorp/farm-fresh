@@ -67,7 +67,6 @@ public class ProductDAOImpl implements ProductDAO {
 	public boolean delete(Product product) {
 		try {
 			product.setActive(false);
-			
 			return this.update(product);
 		} catch (Exception e) {
 			e.printStackTrace();
