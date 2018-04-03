@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="com.offp.com.profile.Profile_Bean"%>
+<%@page import="com.offp.com.profile.Profile_Modal"%>
 <html lang="en">
   <head>
     <!-- 
@@ -93,6 +95,26 @@
   </head>
   
   <body data-spy="scroll" data-target="#ftco-navbar" data-offset="200">
+    
+    <%
+    	String access_token = "EAACEdEose0cBAIT54rtSyPcyBEe5WdnT0pGcsGLnEAgQUamIhvDfy1s4XTpYMFaybZCAaU7xuXPi42F2xPwSz3stzLFxhyHsunTqFahtwRuLNe3EZCJyq5FoRVXq9Sf9x79VRvcakk1iy41UtMiyun0BOl9tfEMmYlPVQTSxjxJZB2Ivsqtyvnch58mmmq3PdU3G26HGgZDZD"; //(String)request.getParameter("access_token");
+    	Profile_Modal oProfile = new Profile_Modal();
+    	Profile_Bean o_Profile_Bean = oProfile.call_me(access_token);
+    %>
+    <div>
+    	Name : <%=o_Profile_Bean.getUserName() %>
+    </div>
+    <div>
+    	ID : <%=o_Profile_Bean.getId() %>
+    </div>
+    <div>
+    	Email : <%=o_Profile_Bean.getEmail() %>
+    </div>
+    <div>
+    	Profile Picture : <%=o_Profile_Bean.getProfilePicture() %>
+    	<div><img src="<%=o_Profile_Bean.getProfilePicture() %>" alt="<%=o_Profile_Bean.getUserName() %>"></div>
+    </div>
+    
     
 	<section class="ftco-section mx-auto" id="section-login"> 
         <div class="container">

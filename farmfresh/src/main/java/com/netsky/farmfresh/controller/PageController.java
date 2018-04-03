@@ -32,7 +32,7 @@ public class PageController {
 	@RequestMapping(value = "/login")
 	public ModelAndView Login() {
 		
-		ModelAndView mv = new ModelAndView("page");
+		ModelAndView mv = new ModelAndView("login");
 		mv.addObject("title", "Login");
 		mv.addObject("userClickedLogin", true);
 		return mv;
