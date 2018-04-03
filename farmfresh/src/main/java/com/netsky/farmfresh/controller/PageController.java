@@ -34,6 +34,54 @@ public class PageController {
 		mv.addObject("categories", categoryDAO.list());
 		mv.addObject("userClickedHome", true);
 		return mv;
+	}	
+
+	/*
+	 * Methods to load all login
+	 * */
+	@RequestMapping(value = "/login")
+	public ModelAndView Login() {
+		
+		ModelAndView mv = new ModelAndView("page");
+		mv.addObject("title", "Login");
+		mv.addObject("userClickedLogin", true);
+		return mv;
+	}
+
+	/*
+	 * Methods to load all farmers
+	 * */
+	@RequestMapping(value = "/farmers")
+	public ModelAndView farmers() {
+		
+		ModelAndView mv = new ModelAndView("page");
+		mv.addObject("title", "Farmers");
+		mv.addObject("userClickedFarmers", true);
+		return mv;
+	}
+	
+	/*
+	 * Methods to load all buyers
+	 * */
+	@RequestMapping(value = "/buyers")
+	public ModelAndView Buyers() {
+		
+		ModelAndView mv = new ModelAndView("page");
+		mv.addObject("title", "Buyers");
+		mv.addObject("userClickedBuyers", true);
+		return mv;
+	}
+	
+	/*
+	 * Methods to load all Order History
+	 * */
+	@RequestMapping(value = "/orderHistory")
+	public ModelAndView OrderHistory() {
+		
+		ModelAndView mv = new ModelAndView("page");
+		mv.addObject("title", "Order History");
+		mv.addObject("userClickedOrderHistory", true);
+		return mv;
 	}
 	
 	@RequestMapping(value = "/about")
@@ -68,7 +116,6 @@ public class PageController {
 		mv.addObject("userClickedAllProducts", true);
 		return mv;
 	}
-
 	
 	@RequestMapping(value = "/show/category/{id}/products")
 	public ModelAndView showCategoryProducts(@PathVariable("id") int id) {
