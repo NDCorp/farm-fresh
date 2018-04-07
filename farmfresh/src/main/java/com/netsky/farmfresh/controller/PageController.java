@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.netsky.farmbackend.dao.CategoryDAO;
 import com.netsky.farmbackend.dao.ProductDAO;
-import com.netsky.farmbackend.dto.Category;
+import com.netsky.farmbackend.dto.Categories;
 import com.netsky.farmbackend.dto.Product;
 import com.netsky.farmfresh.exception.ProductNotFoundException;
 
@@ -124,7 +124,7 @@ public class PageController {
 		ModelAndView mv = new ModelAndView("page");
 		
 		//categoryDAO to fetch a single category
-		Category category = null;
+		Categories category = null;
 		category = categoryDAO.get(id);
 		
 		mv.addObject("title", category.getName());
@@ -142,6 +142,7 @@ public class PageController {
 	/*
 	 * Viewing a single product
 	 * */
+	/*
 	@RequestMapping(value = "/show/{id}/product")
 	public ModelAndView showSingleProduct(@PathVariable int id) throws ProductNotFoundException {
 		ModelAndView mv = new ModelAndView("page");
@@ -161,5 +162,6 @@ public class PageController {
 				
 		return mv;
 	}
+	*/
 	
 }

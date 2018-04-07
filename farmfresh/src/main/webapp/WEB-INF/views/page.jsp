@@ -7,7 +7,6 @@
 <spring:url var="js" value="/resources/js" />
 <spring:url var="images" value="/resources/images" />
 
-
 <c:set var="contextRoot" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
@@ -33,24 +32,6 @@
     <meta name="author" content="Free-Template.co Custoomized for Capstone project - Conestoga College" />
     <link rel="stylesheet" href="${css}/style.css">
 
-    <!-- jQuery, Custom js, and Bootstrap js -->
-    <!--
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-animateNumber/0.0.14/jquery.animateNumber.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script type="text/javascript" src="${js}/custom.js"></script>
-    <script type="text/javascript" src="${js}/main.js"></script>
-    <script type="text/javascript" src="${js}/google-map.js"></script> 
-	-->
-
-    <!-- To remove if remote links works properly -->   
-     
     <script type="text/javascript" src="${js}/jquery.min.js"></script> 
     <script type="text/javascript" src="${js}/popper.min.js"></script>
     <script type="text/javascript" src="${js}/bootstrap.min.js"></script>
@@ -63,33 +44,13 @@
 
     <script type="text/javascript" src="${js}/custom.js"></script>
     <script type="text/javascript" src="${js}/main.js"></script>
-    <script type="text/javascript" src="${js}/google-map.js"></script>
+    <!-- <script type="text/javascript" src="${js}/google-map.js"></script> -->
     
     
     <!-- To remove if remote links work properly -->
 
-<!-- DataTable CSS -->
-<link href="${css}/dataTables.bootstrap.css" rel="stylesheet">
-
-    <!-- Google fonts, Bootstrap, Custom CSS -->
-    <!-- 
-    <link href="https://fonts.googleapis.com/css?family=Oswald:300" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700|Raleway" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" integrity="sha384-VY3F8aCQDLImi4L+tPX4XjtiJwXDwwyXNbkH7SHts0Jlo85t1R15MlXVBKLNx+dj" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css" />
-    <link rel="stylesheet" href="${css}/icomoon.css">
-    <link rel="stylesheet" href="${css}/custom.css">
-    <link rel="stylesheet" href="${css}/animate.css">
-    -->
-    
-    <!-- To remove if remote links works properly -->
+	<!-- DataTable CSS -->
+	<link href="${css}/dataTables.bootstrap.css" rel="stylesheet">
    
     <link rel="stylesheet" href="${css}/gfont-oswald.css">
     <link rel="stylesheet" href="${css}/gfont-playfair.css">

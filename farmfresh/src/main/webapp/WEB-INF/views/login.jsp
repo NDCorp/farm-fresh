@@ -1,6 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+<spring:url var="css" value="/resources/css" />
+<spring:url var="js" value="/resources/js" />
+<spring:url var="images" value="/resources/images" />
+
+
+<c:set var="contextRoot" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <%@page import="com.offp.com.profile.Profile_Bean"%>
 <%@page import="com.offp.com.profile.Profile_Modal"%>
+<%@page import="java.net.URLEncoder" %>
+
 <html lang="en">
   <head>
     <!-- 
@@ -9,6 +23,7 @@
 	<title>Farm Fresh - ${title}</title>
 	<script>
 		window.menu = '${title}';
+		window.contextRoot = '${contextRoot}'; 
 	</script>
     <!-- Icon must be changed, Ref from: https://pngtree.com/freepng/farm_733892.html -->
     <link type="image/x-icon" rel="icon" href="${images}/icon.ico">
@@ -20,25 +35,7 @@
     <meta name="author" content="Free-Template.co Custoomized for Capstone project - Conestoga College" />
 
     <link rel="stylesheet" href="${css}/style.css">
-
-    <!-- jQuery, Custom js, and Bootstrap js -->
-    <!--
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.0/jquery.waypoints.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-animateNumber/0.0.14/jquery.animateNumber.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script type="text/javascript" src="${js}/custom.js"></script>
-    <script type="text/javascript" src="${js}/main.js"></script>
-    <script type="text/javascript" src="${js}/google-map.js"></script> 
-	-->
-
-    <!-- To remove if remote links works properly -->   
-     
+ 
     <script type="text/javascript" src="${js}/jquery.min.js"></script> 
     <script type="text/javascript" src="${js}/popper.min.js"></script>
     <script type="text/javascript" src="${js}/bootstrap.min.js"></script>
@@ -51,30 +48,9 @@
 
     <script type="text/javascript" src="${js}/custom.js"></script>
     <script type="text/javascript" src="${js}/main.js"></script>
-    <script type="text/javascript" src="${js}/google-map.js"></script>
+	<script type="text/javascript" src="${js}/oauth-fb.js"></script> 
+    <!-- <script type="text/javascript" src="${js}/google-map.js"></script> -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuW_Vur6YjDppRXkKHfPesWJodQG7_Wog&libraries=places&callback=initAutocomplete" async defer></script>
-    
-    <!-- To remove if remote links work properly -->
-
-    <!-- Google fonts, Bootstrap, Custom CSS -->
-    <!-- 
-    <link href="https://fonts.googleapis.com/css?family=Oswald:300" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700|Raleway" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" integrity="sha384-VY3F8aCQDLImi4L+tPX4XjtiJwXDwwyXNbkH7SHts0Jlo85t1R15MlXVBKLNx+dj" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.min.css" />
-    <link rel="stylesheet" href="${css}/icomoon.css">
-    <link rel="stylesheet" href="${css}/custom.css">
-    <link rel="stylesheet" href="${css}/animate.css">
-    -->
-    
-    <!-- To remove if remote links works properly -->
    
     <link rel="stylesheet" href="${css}/gfont-oswald.css">
     <link rel="stylesheet" href="${css}/gfont-playfair.css">
@@ -89,38 +65,19 @@
     <link rel="stylesheet" href="${css}/jquery.timepicker.css">  
    
     <link rel="stylesheet" href="${css}/custom.css">
+    <link rel="stylesheet" href="${css}/login.css">
     <link rel="stylesheet" href="${css}/icomoon.css">
     <link rel="stylesheet" href="${css}/animate.css">
  
   </head>
   
   <body data-spy="scroll" data-target="#ftco-navbar" data-offset="200">
-    
-    <%
-    	String access_token = "EAACEdEose0cBAIT54rtSyPcyBEe5WdnT0pGcsGLnEAgQUamIhvDfy1s4XTpYMFaybZCAaU7xuXPi42F2xPwSz3stzLFxhyHsunTqFahtwRuLNe3EZCJyq5FoRVXq9Sf9x79VRvcakk1iy41UtMiyun0BOl9tfEMmYlPVQTSxjxJZB2Ivsqtyvnch58mmmq3PdU3G26HGgZDZD"; //(String)request.getParameter("access_token");
-    	Profile_Modal oProfile = new Profile_Modal();
-    	Profile_Bean o_Profile_Bean = oProfile.call_me(access_token);
-    %>
-    <div>
-    	Name : <%=o_Profile_Bean.getUserName() %>
-    </div>
-    <div>
-    	ID : <%=o_Profile_Bean.getId() %>
-    </div>
-    <div>
-    	Email : <%=o_Profile_Bean.getEmail() %>
-    </div>
-    <div>
-    	Profile Picture : <%=o_Profile_Bean.getProfilePicture() %>
-    	<div><img src="<%=o_Profile_Bean.getProfilePicture() %>" alt="<%=o_Profile_Bean.getUserName() %>"></div>
-    </div>
-    
-    
+ 
 	<section class="ftco-section mx-auto" id="section-login"> 
         <div class="container">
             <div class="col-sm-12 text-center login-logo">
                 <a href="index.html">
-                    <img src="images/logo_transp.png" alt="Logo">
+                    <img src="${images}/logo_transp.png" alt="Logo">
                     <div>[PlatformName]</div>
                 </a>
             </div><!-- END Logo -->
@@ -128,12 +85,22 @@
             <div class="row my-2">
                 <div class="col-sm-12 oauth">
                     <div>Login with:</div>
-                    <a id="facebook-oauth" href="https://www.facebook.com/">
-                        <div class=" logo-oauth">  
-                            <i class="fab fa-facebook-square" title="Facebook"></i>
-                        </div>
-                    </a>
-
+						<!--
+						  Below we include the Login Button social plugin. This button uses
+						  the JavaScript SDK to present a graphical Login button that triggers
+						  the FB.login() function when clicked.
+						-->
+						<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+						</fb:login-button>
+						
+						<!--
+						<a id="facebook-oauth" href="#">
+							<div class=" logo-oauth">  
+								<i class="fab fa-facebook-square" title="Facebook"></i>
+							</div>
+						</a>
+						-->
+					
                     <a id="google-oauth" class="d-none" href="https://accounts.google.com/ServiceLogin/identifier?hl=en&passive=true&continue=https%3A%2F%2Fwww.google.ca%2F%3Fgfe_rd%3Dcr%26dcr%3D0%26ei%3DUdK5WtXAK4jPXt_NkOAG&flowName=GlifWebSignIn&flowEntry=AddSession">
                         <div class="logo-oauth">
                             <i class="fab fa-google" title="Google"></i>
