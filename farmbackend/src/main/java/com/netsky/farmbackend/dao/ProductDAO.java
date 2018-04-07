@@ -3,7 +3,7 @@ package com.netsky.farmbackend.dao;
 import java.util.List;
 
 import com.netsky.farmbackend.dto.Product;
-
+//Items class
 public interface ProductDAO {
 
 	public Product get(int product);
@@ -18,7 +18,7 @@ public interface ProductDAO {
 
 	public List<Product> listActiveProducts();
 
-	public List<Product> listActiveProductsByCategory(int categoryId);
+	//public List<Product> listActiveProductsByCategory(int categoryId);
 
 	public List<Product> getLatestActiveProducts(int counts);
 

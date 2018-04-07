@@ -7,18 +7,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Category {
+public class Categories {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
 	private String description;
-	
-	@Column(name="image_URL")
+	@Column(name="picture")
 	private String imageURL;
-	
-	@Column(name="is_active")
+	@Column(name="isactive")
 	private boolean active = true;
 	
 	public int getId() {
@@ -54,8 +52,8 @@ public class Category {
 	
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + ", description=" + description + ", imageURL=" + imageURL
-				+ ", active=" + active + "]";
+		return "Category [id=" + id + ", name=" + name + ", description=" + description + ", picture=" + imageURL
+				+ ", isactive=" + active + "]";
 	}
 	
 	

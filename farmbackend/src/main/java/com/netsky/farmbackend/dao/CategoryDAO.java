@@ -2,17 +2,17 @@ package com.netsky.farmbackend.dao;
 
 import java.util.List;
 
-import com.netsky.farmbackend.dto.Category;
+import com.netsky.farmbackend.dto.Categories;
 
 public interface CategoryDAO {
 
-	public List<Category> list();
+	public List<Categories> list();
 
-	public Category get(int id);
+	public Categories get(int id);
 
-	public boolean add(Category category);
+	public boolean add(Categories category);
 
-	public boolean update(Category category);
+	public boolean update(Categories category);
 
-	public boolean delete(Category category);
+	public boolean delete(Categories category);
 }
