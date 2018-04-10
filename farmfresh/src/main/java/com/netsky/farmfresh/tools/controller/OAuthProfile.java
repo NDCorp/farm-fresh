@@ -1,4 +1,4 @@
-package com.offp.com.profile;
+package com.netsky.farmfresh.tools.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -6,71 +6,103 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.json.JsonObject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 
 //import javax.json.JsonObject;
 
 import org.json.JSONObject;
 //import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class Profile_Modal {
+import com.netsky.farmbackend.dao.BuyerDAO;
+import com.netsky.farmbackend.dao.CategoryDAO;
+import com.netsky.farmbackend.dao.UserTypeDAO;
+import com.netsky.farmbackend.dto.Buyer;
+import com.netsky.farmbackend.dto.Category;
+import com.netsky.farmbackend.dto.UserType;
+
+
+public class OAuthProfile {
+
+	@Autowired BuyerDAO buyerDAO;
+	@Autowired UserTypeDAO uTypeDAO;
+	@Autowired CategoryDAO categoryDAO;
 	
-	public static void main(String [] args) {
-		try	
+	public Buyer GetFBData(String access_token) throws Exception {
+		
+		try
 		{
-			//Profile_Modal oProfile = new Profile_Modal();
-			//oProfile.call_me();
+			String url = "https://graph.facebook.com/v2.12/me?fields=id%2Cname%2C%20picture%2C%20email&access_token="+access_token;
+	
+			URL obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+	
+			//Define get method to get data from fb
+			con.setRequestMethod("GET");
+			//add request header
+			con.setRequestProperty("User-Agent", "Mozilla/5.0");
+			int responseCode = con.getResponseCode();
+			System.out.println("\nSending 'GET' request to URL : " + url);
+			System.out.println("Response Code : " + responseCode);
+			con.setReadTimeout(10000);
+	
+			//Read data
+			InputStreamReader strReader = new InputStreamReader(con.getInputStream());
+			BufferedReader in = new BufferedReader(strReader);
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+	
+			while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+			}
+			in.close();
+	
+			//print in String
+			//System.out.println(response.toString());
+	
+			//** create a new buyer using fb data
+			Buyer buyer = new Buyer();
+			JSONObject myResponse = new JSONObject(response.toString());
+			//test.getJsonString(response.toString());
+	
+			//Read JSON response
+			buyer.setFirstName(myResponse.getString("name"));
+			buyer.setLastName(myResponse.getString("name"));
+			//System.out.println("Name: " + myResponse.getString("name"));
+	
+			buyer.setEmail(myResponse.getString("email"));
+			buyer.setDateCreated(ToolBox.GetCurrentDate());
+	
+			//Get the userType
+			Category test = new Category();
+			test = categoryDAO.get(1);
+			
+			UserType uType = new UserType();
+			uType = uTypeDAO.getByAcronym('B');
+			buyer.setUserType(uType);
+
+			//May be I can encrypt fb id. in that case change field size in mysql to 40
+			buyer.setFbBuyerId(myResponse.getString("id"));	
+			
+			/*
+			JSONObject pict_response = myResponse.getJSONObject("picture");
+			JSONObject data_response = pict_response.getJSONObject("data");
+			buyer.setPicture(data_response.getString("url"));
+			*/
+			
+			//Add a new buyer in the db with fb data
+			buyerDAO.add(buyer);
+			
+				
+			//avoid to return a buyer, use session variables
+			return buyer; 
 		}
 		catch (Exception ex)
 		{
-			System.err.println(ex);
+			ex.printStackTrace();
+			return null; 
 		}
-	}
-	public Profile_Bean call_me(String access_token) throws Exception {
-	     String url = "https://graph.facebook.com/v2.12/me?fields=id%2Cname%2C%20picture%2C%20email&access_token="+access_token;
-	     URL obj = new URL(url);
-	     HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-	     // optional default is GET
-	     con.setRequestMethod("GET");
-	     //add request header
-	     con.setRequestProperty("User-Agent", "Mozilla/5.0");
-	     int responseCode = con.getResponseCode();
-	     System.out.println("\nSending 'GET' request to URL : " + url);
-	     System.out.println("Response Code : " + responseCode);
-	     con.setReadTimeout(10000);
-	     InputStreamReader strReader = new InputStreamReader(con.getInputStream());
-	     BufferedReader in = new BufferedReader(strReader);
-	     String inputLine;
-	     StringBuffer response = new StringBuffer();
-	     while ((inputLine = in.readLine()) != null) {
-	     	response.append(inputLine);
-	     }
-	     in.close();
-	     
-	     //print in String
-	     System.out.println(response.toString());
-	     
-	     Profile_Bean o_Profile_Bean = new Profile_Bean();
-	     //System.out.println(response["name"]);
-	     JSONObject myResponse = new JSONObject(response.toString());
-	     //test.getJsonString(response.toString());
-	     
-	     //Read JSON response, print and add to the object Profile_Bean
-	     o_Profile_Bean.setUserName(myResponse.getString("name"));
-	     //System.out.println("Name: " + myResponse.getString("name"));
-	     
-	     o_Profile_Bean.setId(myResponse.getString("id"));
-	     //System.out.println("id: " + myResponse.getString("id"));
-	     
-	     o_Profile_Bean.setEmail(myResponse.getString("email"));
-	     //System.out.println("Email: " + myResponse.getString("email"));
-	     
-	     JSONObject pict_response = myResponse.getJSONObject("picture");
-	     JSONObject data_response = pict_response.getJSONObject("data");
-	     o_Profile_Bean.setProfilePicture(data_response.getString("url"));
-	     //System.out.println("URL: " + data_response.getString("url"));
 		
-	     //return the object
-	     return o_Profile_Bean;    
-	     
-   }
+	}
 }

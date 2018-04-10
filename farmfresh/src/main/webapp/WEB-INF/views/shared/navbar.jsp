@@ -1,6 +1,15 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <!-- SHARED NAV BAR -->
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark-custom ftco-navbar-light" id="ftco-navbar">
+  <%
+  	//Get username from session if exist
+  	String userName = "";
+  	if(session.getAttribute("username") != null)
+  		userName = (String) session.getAttribute("firstname");
+  %>
+  
   <div class="container">
     <a class="navbar-brand" href="index.html">
       <!-- Logo must be changed, Ref from: https://pngtree.com/freepng/farm_733892.html -->
@@ -25,18 +34,40 @@
 
   <div class="container-search-user-cart">
       <i id="searchOption" class="fas fa-search" title="Search"></i>
-      <a href="${contextRoot}/buyers.html">
-        <i class="fas fa-user" title="User"></i>
-      </a>
-      <a href="${contextRoot}/buyers.html">
+          
+      <!--<a href="buyer.html">-->
+      <i id="userOption" class="fas fa-user" title="User"></i>
+      <!--</a>-->
+      
+      <a href="buyer.html">
         <i class="fas fa-shopping-cart" title="Shopping cart"></i>
       </a>
 
       <div id="menuSearch">
-        <form asp-controller="" asp-action=""  method="post" autocomplete="off">
+        <form action=""  method="post" autocomplete="off">
           <input type="text" name="menuSearch" value="" placeholder="Search">
           <!--<button type="submit" name="submit">Search</button>-->
         </form>
+      </div>
+
+      <div id="userAccount">
+      	<div>user name: <%=userName %></div>
+      	
+      	  <c:set var="uName" scope="session" value="<%=userName %>"/>
+      	  <c:if test="{not empty <%=userName %>}">
+	          <div class="create-user-left-side"><a href="#">User: <%=userName %></a></div>
+	          <div class="create-user-left-side"><img src="images/icon.ico" class="px-1 py-1 w-50" alt="<%=userName %> picture"></div>
+          </c:if>
+          
+          <c:choose>
+          	<c:when test="${not empty uName}">
+          		<div class="create-user-left-side"><a href="${contextRoot}/home" onclick="FB.logout();">Logout</a></div>
+          	</c:when>
+          	
+          	<c:otherwise>
+          		<div class="create-user-left-side"><a href="${contextRoot}/login">Login</a></div>
+          	</c:otherwise>
+          </c:choose>
       </div>
   </div><!-- END container-search-user-cart -->
 </nav>

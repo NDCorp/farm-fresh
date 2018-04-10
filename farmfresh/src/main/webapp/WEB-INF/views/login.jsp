@@ -11,8 +11,6 @@
 <c:set var="contextRoot" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
-<%@page import="com.offp.com.profile.Profile_Bean"%>
-<%@page import="com.offp.com.profile.Profile_Modal"%>
 <%@page import="java.net.URLEncoder" %>
 
 <html lang="en">
@@ -116,7 +114,7 @@
                         <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required="" autofocus=""> 
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="" autofocus="">
+                        <input type="password" id="login-password" name="login-password" class="form-control" placeholder="Password" required="" autofocus="">
                     </div>
                     
                     <div class="row">
@@ -157,15 +155,22 @@
                     <small>CLOSE </small><span aria-hidden="true">&times;</span>
                     </button>
                     <h1 class="mb-4">Create a new user</h1>  
-                    <form asp-controller="" asp-action="#" method="post">
+                    <!-- Form to add user -->
+                    <form action="login" method="post">
                         <!-- User Type: here show only Buyer and Farmer -->
                         <div class="row">
-                            <label for="m_utype">[Load User Types]</label>
+                            <label for="m_utype">Select User Type</label>
                             <select name="select-utype" id="m_utype" class="form-control">
+	                            <c:forEach items="${userTypes}" var="userType">
+	                            	<option value="${userType.id}">${userType.type}</option>
+	                            </c:forEach>
+	                            <!-- 
                                 <option value="1" selected>Buyer</option>
                                 <option value="2">Farmer</option>
-                                <!--<option value="3">Administrator</option>-->
+                                <option value="3">Administrator</option>
+                                -->
                             </select>
+                            
                         </div>
                         <!-- Specific fields for Farmer to create a farm first -->
                         <fieldset class="my-2 form-farm-fields">
@@ -196,31 +201,31 @@
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <!-- <label for="street_number">Number</label> -->
-                                        <input type="number" class="field form-control" id="street_number_farm" placeholder="Number" disabled="true" required></input>
+                                        <input type="number" class="field form-control" id="street_number_farm" placeholder="Number" disabled="true"></input>
                                     </div>
                                     <div class="col-md-8 form-group">
                                         <!-- <label for="route">Street name</label> -->
-                                        <input class="field form-control" id="route_farm" disabled="true" placeholder="Street name" required></input></td>
+                                        <input class="field form-control" id="route_farm" disabled="true" placeholder="Street name"></input></td>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 form-group">
                                         <!-- <label for="locality">City</label> -->
-                                        <input type="number" class="field form-control" id="locality_farm" placeholder="City" disabled="true" required></input>
+                                        <input type="number" class="field form-control" id="locality_farm" placeholder="City" disabled="true"></input>
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <!-- <label for="administrative_area_level_1">Province</label> -->
-                                        <input class="field form-control" id="administrative_area_level_1_farm" placeholder="Province" disabled="true" required></input></td>
+                                        <input class="field form-control" id="administrative_area_level_1_farm" placeholder="Province" disabled="true"></input></td>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3 form-group">
                                         <!-- <label for="postal_code">Postal code</label> -->
-                                        <input type="number" class="field form-control" id="postal_code_farm" placeholder="Postal code" disabled="true" required></input>
+                                        <input type="number" class="field form-control" id="postal_code_farm" placeholder="Postal code" disabled="true"></input>
                                     </div>
                                     <div class="col-md-9 form-group">
                                         <!-- <label for="country_farm">Country</label> -->
-                                        <input class="field form-control" id="country_farm" disabled="true" placeholder="Country" required></input></td>
+                                        <input class="field form-control" id="country_farm" disabled="true" placeholder="Country"></input></td>
                                     </div>
                                 </div>
                             </div><!-- END Farm Address -->
@@ -229,13 +234,13 @@
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="m_ffname">Farm Name</label>
-                                    <input type="text" class="form-control" id="m_ffname"></input>
+                                    <input type="text" class="form-control" id="m_ffname" required></input>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="m_ffheadline">Head Line</label>
-                                    <input type="text" class="form-control" id="m_ffheadline"></input>
+                                    <input type="text" class="form-control" id="m_ffheadline" required></input>
                                 </div>
                             </div>
                             <div class="row">
@@ -335,18 +340,18 @@
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="m_phone">Phone</label>
-                                    <input type="text" class="form-control" id="m_phone">
+                                    <input type="text" class="form-control" id="m_phone" required>
                                 </div>
                             </div>
                             <!-- Password -->
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="m_password">Password</label>
-                                    <input type="password" class="form-control" id="m_password">
+                                    <input type="password" class="form-control" id="m_password" required>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="m_rpassword">Retype password</label>
-                                    <input type="password" class="form-control" id="m_rpassword">
+                                    <label for="m_cpassword">Confirm password</label>
+                                    <input type="password" class="form-control" id="m_cpassword" required>
                                 </div>
                                 <div></div>
                             </div>

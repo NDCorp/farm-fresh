@@ -15,6 +15,17 @@ $(document).ready( function(e) {
         });
 
     });
+
+    //Show or hide the user options in the menu header
+    $('#userOption').click( function(e) {
+        //alert(e);
+        var divAccount = jQuery('#userAccount');
+
+        divAccount.slideToggle( function() {
+            jQuery('#userAccount').focus();
+        });
+
+    });
     
     /* Show uploaded picture */
     $('#m_upicture, #m_fpicture').on('change', function () {
@@ -50,19 +61,19 @@ $(document).ready( function(e) {
 
     /* Show farm, or farmer specific field */
     $('#m_utype').on('change', function () {
-        var userType = ['1', '2'];  //['Buyer', 'Farmer']
+        var userType = ['1', '2'];  //['Farmer', 'Buyer']
 
         switch (this.value) {
             case userType[0]:   //farmer, show block
                 jQuery('.form-farm-fields').slideToggle( function() {
-                    this.style.display = 'none';
+                    this.style.display = 'block';
                     //change specific fields to not required
 
                 });
                 break;
             case userType[1]:    //buyer, Hide block
                 jQuery('.form-farm-fields').slideToggle( function() {
-                    this.style.display = 'block';
+                    this.style.display = 'none';
                     //change specific fields to required
 
                 });

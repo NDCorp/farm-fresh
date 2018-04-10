@@ -11,7 +11,7 @@
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-      window.location.href='buyers?access_token=' + response.authResponse.accessToken; 
+      window.location.href='index?access_token=' + response.authResponse.accessToken; 
       //testAPI();
     } else {
       // The person is not logged into your app or we are unable to tell.
@@ -54,6 +54,10 @@
       statusChangeCallback(response);
     });
 
+    //Logout
+    FB.logout(function(response) {
+	   // Person is now logged out
+	});
   };
 
   // Load the SDK asynchronously
@@ -71,7 +75,7 @@
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
       console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
+      //document.getElementById('status').innerHTML =
+       // 'Thanks for logging in, ' + response.name + '!';
     });
   }

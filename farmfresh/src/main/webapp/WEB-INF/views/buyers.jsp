@@ -1,39 +1,6 @@
 
 <!-- Facebook oAuth information -->
-<%@page import="com.offp.com.profile.Profile_Modal"%>
-<%@page import="com.offp.com.profile.Profile_Bean"%>
-<%
-	String access_token = (String)request.getParameter("access_token");
-	Profile_Modal oProfile = new Profile_Modal();
-	Profile_Bean o_Profile_Bean = new Profile_Bean();
-	String userName = "";
-	
-	if (access_token != null && !access_token.isEmpty()) 
-		o_Profile_Bean = oProfile.call_me(access_token);
-
-	
-%>
-<% if (access_token != null && !access_token.isEmpty()) { 
-	userName = o_Profile_Bean.getUserName();
-%>
-<div>
-	Name : <%=userName %>
-</div>
-<div>
-	ID : <%=o_Profile_Bean.getId() %>
-</div>
-<div>
-	Email : <%=o_Profile_Bean.getEmail() %>
-</div>
-<div>
-	Profile Picture : <%=o_Profile_Bean.getProfilePicture() %>
-	<div><img src="<%=o_Profile_Bean.getProfilePicture() %>" alt="<%=o_Profile_Bean.getUserName() %>"></div>
-</div> 
-<% } 
-else 
-	userName = "";
-%>    
-    
+ 
 <!-- Content -->
 <section class="ftco-section"> 
     <div class="container">
@@ -41,7 +8,7 @@ else
         <div class="row ftco-custom-gutters mb-4">
             <!-- User name -->
             <div class="col-md-12">
-                <p id="lnkMyProducts" class="col-md-6 d-inline-block"><a href="${contextRoot}/buyers.html">User <%=userName %></a></p> 
+                <p id="lnkMyProducts" class="col-md-6 d-inline-block"><a href="${contextRoot}/buyers.html">User <%//=userName %></a></p> 
             </div>
             
             <!-- Button Options -->

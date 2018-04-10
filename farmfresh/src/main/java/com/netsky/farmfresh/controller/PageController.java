@@ -10,7 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.netsky.farmbackend.dao.CategoryDAO;
 import com.netsky.farmbackend.dao.ProductDAO;
-import com.netsky.farmbackend.dto.Categories;
+import com.netsky.farmbackend.dao.UserTypeDAO;
+import com.netsky.farmbackend.dto.Category;
 import com.netsky.farmbackend.dto.Product;
 import com.netsky.farmfresh.exception.ProductNotFoundException;
 
@@ -21,6 +22,7 @@ public class PageController {
 	
 	@Autowired CategoryDAO categoryDAO;
 	@Autowired ProductDAO productDAO;
+	@Autowired UserTypeDAO userTypeDAO;
 	
 	@RequestMapping(value = {"/", "/home", "/index"})
 	public ModelAndView index() {
@@ -45,6 +47,9 @@ public class PageController {
 		
 		ModelAndView mv = new ModelAndView("login");
 		mv.addObject("title", "Login");
+		
+		//passing type of users
+		mv.addObject("userTypes", userTypeDAO.list());
 		mv.addObject("userClickedLogin", true);
 		return mv;
 	}
@@ -124,7 +129,7 @@ public class PageController {
 		ModelAndView mv = new ModelAndView("page");
 		
 		//categoryDAO to fetch a single category
-		Categories category = null;
+		Category category = null;
 		category = categoryDAO.get(id);
 		
 		mv.addObject("title", category.getName());
