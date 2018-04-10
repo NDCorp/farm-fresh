@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.netsky.farmbackend.dao.CategoryDAO;
-import com.netsky.farmbackend.dto.Categories;
+import com.netsky.farmbackend.dto.Category;
 
 @Repository("categoryDAO")
 @Transactional
@@ -20,26 +20,26 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	//private static List<Category> categories = new ArrayList<>();
 
-	public List<Categories> list() {
+	public List<Category> list() {
 		
-		String selectActiveCategory = "FROM Categories WHERE IsActive = :active";
+		String selectActiveCategory = "FROM Category WHERE IsActive = :active";
 		Query query = sessionFactory.getCurrentSession().createQuery(selectActiveCategory);
 		query.setParameter("active", true);
 		
 		return query.getResultList();
 		
-		//return sessionFactory.getCurrentSession().createQuery("FROM Categories ", Categories.class).getResultList();
+		//return sessionFactory.getCurrentSession().createQuery("FROM Category ", Category.class).getResultList();
 	
 	}
 
 	//Getting single category based on ID 
 	@Override
-	public Categories get(int id) {
-		return sessionFactory.getCurrentSession().get(Categories.class, Integer.valueOf(id));
+	public Category get(int id) {
+		return sessionFactory.getCurrentSession().get(Category.class, Integer.valueOf(id));
 	}
 
 	@Override
-	public boolean add(Categories category) {
+	public boolean add(Category category) {
 		try {
 			//Add the category to the database table
 			sessionFactory.getCurrentSession().persist(category);
@@ -51,7 +51,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 	}
 
 	@Override
-	public boolean update(Categories category) {
+	public boolean update(Category category) {
 		try {
 			//Update the category to the database table
 			sessionFactory.getCurrentSession().update(category);
@@ -63,7 +63,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 	}
 
 	@Override
-	public boolean delete(Categories category) {
+	public boolean delete(Category category) {
 		category.setActive(false);
 		try {
 			//Update the category to the database table

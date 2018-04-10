@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.netsky.farmbackend.dao.CategoryDAO;
-import com.netsky.farmbackend.dto.Categories;
+import com.netsky.farmbackend.dto.Category;
 
 public class CategoryTestCase {
 
@@ -15,7 +15,7 @@ public class CategoryTestCase {
 
 	private static CategoryDAO categoryDAO;
 
-	private Categories category;
+	private Category category;
 
 	@BeforeClass
 	public static void init() {
@@ -68,7 +68,7 @@ public class CategoryTestCase {
 	public void testCrudCategory() {
 		
 		//Add Operation
-		category = new Categories(); 
+		category = new Category(); 
 		
 		category.setName("Vegetable");
 		category.setDescription("Description for Vegetables.");
@@ -76,7 +76,7 @@ public class CategoryTestCase {
 		
 		assertEquals("Successfully added a category inside the table.", true, categoryDAO.add(category));
 		
-		category = new Categories(); 
+		category = new Category(); 
 		
 		category.setName("Meat");
 		category.setDescription("Description for Meat.");
