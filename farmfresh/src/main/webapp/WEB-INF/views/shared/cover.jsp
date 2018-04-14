@@ -3,15 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <section class="ftco-cover" style="background-image: url(${images}/bg_3.jpg);" id="section-home">
-  <div class="container"> 
-    <%
-    	session = request.getSession(true);
-	  	//Get username from session if exist
-	  	String userName1 = "";
-	  	if(session.getAttribute("username") != null)
-	  		userName1 = (String) session.getAttribute("firstname");
-  	%>
-  
+  <div class="container">   
     <div class="row align-items-center justify-content-center text-center ftco-vh-100">
       <div class="col-md-12">
         <h1 class="ftco-heading ftco-animate mb-3">Welcome To [PlatformName]</h1>
@@ -24,10 +16,10 @@
           <a href="#section-home" class="btn btn-outline-white btn-lg ftco-animate">Shop online</a>
         </p>   
         <p class="d-inline-block">
-	        <c:set var="uName" scope="session" value="<%=userName1 %>"/>
+	        <c:set var="uName" scope="session" value='<%=(String) session.getAttribute("currentuser") %>'/>
 			<c:choose>
 				<c:when test="${not empty uName}">
-					<a href="${contextRoot}/home" class="btn btn-outline-white btn-lg ftco-animate" onclick="FB.logout();">Log out</a>
+					<a href="${contextRoot}/logout" class="btn btn-outline-white btn-lg ftco-animate" onclick="FB.logout();">Log out</a>
 				</c:when>
 				
 				<c:otherwise>
