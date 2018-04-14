@@ -1,5 +1,5 @@
+<%@page import="com.netsky.farmfresh.controller.OAuthController"%>
 <%@page import="com.netsky.farmfresh.tools.controller.ToolBox"%>
-<%@page import="com.netsky.farmfresh.tools.controller.OAuthProfile"%>
 <%@page import="com.netsky.farmbackend.dto.Buyer"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -46,7 +46,7 @@
     <script type="text/javascript" src="${js}/jquery.animateNumber.min.js"></script>
 
     <script type="text/javascript" src="${js}/custom.js"></script>
-    <script type="text/javascript" src="${js}/main.js"></script>
+    <script type="text/javascript" src="${js}/main.js"></script>  
     <!-- <script type="text/javascript" src="${js}/google-map.js"></script> -->
     
     
@@ -86,49 +86,7 @@
 
 		<!-- Page Content -->
 		<div class="content">
-			<%
-				session = request.getSession(true);	
-				//Cookie userName;
-				String access_token = (String)request.getParameter("access_token");
-				
-				//Create oauth profile object
-				OAuthProfile oProfile = new OAuthProfile();
-				//Create a new user object buyer
-				Buyer buyer = new Buyer();
-				
-				if (access_token != null && !access_token.isEmpty()) {
-					buyer = oProfile.GetFBData(access_token);
-					
-					//** Save session user variables. set session to expire in 2 min = 120sec
-					session.setAttribute("username", buyer.getEmail());
-					session.setAttribute("pass", ToolBox.GetMD5("123freshfarm"));	//fake password
-					session.setAttribute("name", buyer.getFirstName());
-					session.setMaxInactiveInterval(120);
-					
-					//** Save cookie user variables. set cookie to expire in 2 min = 120sec
-					/*userName =  new Cookie("username", buyer.getEmail());
-					userName.setMaxAge(120);
-					response.addCookie(userName);*/
-			%>
-			<div>
-				Name : <%=buyer.getFirstName() %>
-			</div>
-			<div>
-				ID : <%=buyer.getFbBuyerId() %>
-			</div>
-			<div>
-				Email : <%=buyer.getEmail() %>
-			</div>
-			<!-- 
-			<div>
-				Profile Picture : <%//=buyer.getPicture() %>
-				<div><img src="<%//=buyer.getPicture() %>" alt="<%//=buyer.getFirstName() %>"></div>
-			</div> 
-			 -->
-			<% } 
-			//else 
-				//userName = "";
-			%>    
+			 
 			
 			  
 			<!-- Load when you clicked Home -->

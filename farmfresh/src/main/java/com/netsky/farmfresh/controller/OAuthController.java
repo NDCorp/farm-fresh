@@ -1,6 +1,7 @@
-package com.netsky.farmfresh.tools.controller;
+package com.netsky.farmfresh.controller;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -14,6 +15,12 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 //import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.netsky.farmbackend.dao.BuyerDAO;
 import com.netsky.farmbackend.dao.CategoryDAO;
@@ -21,9 +28,10 @@ import com.netsky.farmbackend.dao.UserTypeDAO;
 import com.netsky.farmbackend.dto.Buyer;
 import com.netsky.farmbackend.dto.Category;
 import com.netsky.farmbackend.dto.UserType;
+import com.netsky.farmfresh.tools.controller.ToolBox;
 
-
-public class OAuthProfile {
+@Controller
+public class OAuthController {
 
 	@Autowired BuyerDAO buyerDAO;
 	@Autowired UserTypeDAO uTypeDAO;
@@ -47,7 +55,7 @@ public class OAuthProfile {
 			System.out.println("Response Code : " + responseCode);
 			con.setReadTimeout(10000);
 	
-			//Read data
+			//Read data (con.getResponseCode	InputStream())
 			InputStreamReader strReader = new InputStreamReader(con.getInputStream());
 			BufferedReader in = new BufferedReader(strReader);
 			String inputLine;

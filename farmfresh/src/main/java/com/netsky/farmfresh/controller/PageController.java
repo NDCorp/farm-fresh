@@ -1,19 +1,36 @@
 package com.netsky.farmfresh.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.netsky.farmbackend.dao.BuyerDAO;
 import com.netsky.farmbackend.dao.CategoryDAO;
 import com.netsky.farmbackend.dao.ProductDAO;
 import com.netsky.farmbackend.dao.UserTypeDAO;
+import com.netsky.farmbackend.dto.Buyer;
 import com.netsky.farmbackend.dto.Category;
-import com.netsky.farmbackend.dto.Product;
+import com.netsky.farmbackend.dto.UserType;
 import com.netsky.farmfresh.exception.ProductNotFoundException;
+import com.netsky.farmfresh.tools.controller.ToolBox;
 
 @Controller
 public class PageController {
@@ -23,9 +40,11 @@ public class PageController {
 	@Autowired CategoryDAO categoryDAO;
 	@Autowired ProductDAO productDAO;
 	@Autowired UserTypeDAO userTypeDAO;
+	@Autowired BuyerDAO buyerDAO;
 	
-	@RequestMapping(value = {"/", "/home", "/index"})
-	public ModelAndView index() {
+	@RequestMapping(value = {"/", "/home", "/index"})	//, method = RequestMethod.GET
+	public ModelAndView index(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException {
 		
 		ModelAndView mv = new ModelAndView("page");
 		mv.addObject("title", "Home");
@@ -33,11 +52,129 @@ public class PageController {
 		logger.info("Inside PageController Index Method");
 		logger.debug("Inside PageController Index Method");
 		
+		try
+		{
+			//Get the session and manage the user connected with oAuth fb 
+			HttpSession session = req.getSession(true);
+			
+			//get the fb user access token
+			String access_token = (String) req.getParameter("access_token");
+			
+			//Create a new user object buyer
+			Buyer buyer = new Buyer();
+			ToolBox tools = new ToolBox();
+			
+			if (access_token != null && !access_token.isEmpty()) {
+				buyer = GetFBData(access_token);
+				
+				//** Save session user variables. set session to expire in 2 min = 120sec
+				session.setAttribute("username", buyer.getEmail());
+				session.setAttribute("pass", buyer.getPassword());	//fake password
+				session.setAttribute("name", buyer.getFirstName());
+				session.setMaxInactiveInterval(1200);
+				
+				//** Save cookie user variables. set cookie to expire in 2 min = 120sec
+				Cookie userName =  new Cookie("username", buyer.getEmail());
+				userName.setMaxAge(1200);
+				resp.addCookie(userName); 
+				
+				//mv.addObject("username", buyer.getFirstName());
+			}
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
 		//passing the list of category
 		mv.addObject("categories", categoryDAO.list());
 		mv.addObject("userClickedHome", true);
 		return mv;
 	}	
+
+
+	
+	/*
+	 * Methods to get data from facebook API
+	 * */
+	public Buyer GetFBData(String access_token) throws Exception {
+		
+		try
+		{
+			String url = "https://graph.facebook.com/v2.12/me?fields=id%2Cname%2C%20picture%2C%20email&access_token="+access_token;
+
+			URL obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+			//Define get method to get data from fb
+			con.setRequestMethod("GET");
+			//add request header
+			con.setRequestProperty("User-Agent", "Mozilla/5.0");
+			int responseCode = con.getResponseCode();
+			System.out.println("\nSending 'GET' request to URL : " + url);
+			System.out.println("Response Code : " + responseCode);
+			con.setReadTimeout(10000);
+
+			//Read data
+			InputStreamReader strReader = new InputStreamReader(con.getInputStream());
+			BufferedReader in = new BufferedReader(strReader);
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+	
+			while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+			}
+			in.close();
+	
+			//** create a new buyer using fb data
+			Buyer buyer = new Buyer();
+			JSONObject myResponse = new JSONObject(response.toString());
+			//test.getJsonString(response.toString());
+	
+			//Get the buyer from DB
+			buyer = buyerDAO.getByFbBuyerId(myResponse.getString("id"));
+			
+			//If not found
+			if (buyer == null) {
+				//Read JSON response
+				buyer = new Buyer();
+				
+				//May be I can encrypt fb id. in that case change field size in mysql to 40
+				buyer.setFbBuyerId(myResponse.getString("id"));	
+				buyer.setFirstName(myResponse.getString("name"));
+				buyer.setLastName(myResponse.getString("name"));
+				buyer.setPassword(ToolBox.GetMD5("123freshfarm"));
+				//System.out.println("Name: " + myResponse.getString("name"));
+		
+				buyer.setEmail(myResponse.getString("email"));
+				buyer.setDateCreated(ToolBox.GetCurrentDate());
+				buyer.setActif(true);
+				
+				//Get the userType		
+				UserType uType = new UserType();
+				uType = userTypeDAO.getByAcronym('B');
+				buyer.setUserType(uType);
+				
+				/*
+				JSONObject pict_response = myResponse.getJSONObject("picture");
+				JSONObject data_response = pict_response.getJSONObject("data");
+				buyer.setPicture(data_response.getString("url"));
+				*/
+				
+				//Add a new buyer in the db with fb data
+				buyerDAO.add(buyer);
+			
+			}
+			
+			//avoid to return a buyer, use session variables
+			return buyer; 
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+			return null; 
+		}		
+	}
 
 	/*
 	 * Methods to load all login
@@ -49,11 +186,31 @@ public class PageController {
 		mv.addObject("title", "Login");
 		
 		//passing type of users
-		mv.addObject("userTypes", userTypeDAO.list());
+		//mv.addObject("userTypes", userTypeDAO.list());
 		mv.addObject("userClickedLogin", true);
 		return mv;
 	}
 
+	/*
+	 * Methods to load all logout
+	 * */
+	//@RequestMapping(value = "/logout")
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String Logout(HttpSession session) {
+		
+		session.invalidate();
+        return "redirect:/index";
+        /*
+		ModelAndView mv = new ModelAndView("logout");
+		mv.addObject("title", "logout");
+		
+		//passing type of users
+		//mv.addObject("userTypes", userTypeDAO.list());
+		mv.addObject("userClickedLogout", true);
+		return mv;
+		*/
+	}
+	
 	/*
 	 * Methods to load all farmers
 	 * */

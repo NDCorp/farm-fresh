@@ -39,7 +39,10 @@ public class UserTypeDAOImpl implements UserTypeDAO{
 	//Retrieve a UserType based on its acronym 
 	@Override
 	public UserType getByAcronym(char acronym) {
-		return sessionFactory.getCurrentSession().get(UserType.class, acronym);
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM UserType WHERE Acronym =:acronym "); 
+		query.setParameter("acronym", acronym);
+		
+		return (UserType) query.getSingleResult();
 	}
 	
 	@Override

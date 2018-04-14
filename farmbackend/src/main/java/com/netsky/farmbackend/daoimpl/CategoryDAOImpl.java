@@ -22,7 +22,7 @@ public class CategoryDAOImpl implements CategoryDAO {
 
 	public List<Category> list() {
 		
-		String selectActiveCategory = "FROM Category WHERE IsActive = :active";
+		String selectActiveCategory = "FROM Category WHERE IsActive =:active";
 		Query query = sessionFactory.getCurrentSession().createQuery(selectActiveCategory);
 		query.setParameter("active", true);
 		

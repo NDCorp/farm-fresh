@@ -7,7 +7,9 @@
   	//Get username from session if exist
   	String userName = "";
   	if(session.getAttribute("username") != null)
-  		userName = (String) session.getAttribute("firstname");
+  		userName = (String) session.getAttribute("name");
+  	
+  	session.setAttribute("currentuser", userName);
   %>
   
   <div class="container">
@@ -35,11 +37,9 @@
   <div class="container-search-user-cart">
       <i id="searchOption" class="fas fa-search" title="Search"></i>
           
-      <!--<a href="buyer.html">-->
       <i id="userOption" class="fas fa-user" title="User"></i>
-      <!--</a>-->
       
-      <a href="buyer.html">
+      <a href="${contextRoot}/buyers.html">
         <i class="fas fa-shopping-cart" title="Shopping cart"></i>
       </a>
 
@@ -51,23 +51,22 @@
       </div>
 
       <div id="userAccount">
-      	<div>user name: <%=userName %></div>
-      	
-      	  <c:set var="uName" scope="session" value="<%=userName %>"/>
-      	  <c:if test="{not empty <%=userName %>}">
-	          <div class="create-user-left-side"><a href="#">User: <%=userName %></a></div>
-	          <div class="create-user-left-side"><img src="images/icon.ico" class="px-1 py-1 w-50" alt="<%=userName %> picture"></div>
-          </c:if>
-          
-          <c:choose>
-          	<c:when test="${not empty uName}">
-          		<div class="create-user-left-side"><a href="${contextRoot}/home" onclick="FB.logout();">Logout</a></div>
-          	</c:when>
-          	
-          	<c:otherwise>
-          		<div class="create-user-left-side"><a href="${contextRoot}/login">Login</a></div>
-          	</c:otherwise>
-          </c:choose>
+      	<c:set var="uName" scope="session" value="<%=userName %>"/>    	
+      	  
+		<c:if test="${not empty uName}">
+			<div class="create-user-left-side"><a href="${contextRoot}/buyers.html"><%=userName %></a></div>
+			<div class="create-user-left-side"><img src="${images}/icon.ico" class="px-1 py-1 w-50" alt="<%=userName %> picture"></div>
+		</c:if>
+		
+		<c:choose>
+			<c:when test="${not empty uName}">
+				<div class="create-user-left-side"><a href="${contextRoot}/logout" onclick="javascript:FB.logout(function() { window.location.reload() }); return false;">Logout</a></div>
+			</c:when>
+			
+			<c:otherwise>
+				<div class="create-user-left-side"><a href="${contextRoot}/login">Login</a></div>
+			</c:otherwise>
+		</c:choose>
       </div>
   </div><!-- END container-search-user-cart -->
 </nav>

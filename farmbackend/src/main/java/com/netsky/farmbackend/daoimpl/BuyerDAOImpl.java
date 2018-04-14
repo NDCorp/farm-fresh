@@ -2,6 +2,8 @@ package com.netsky.farmbackend.daoimpl;
 
 import java.util.List;
 
+import javax.persistence.NonUniqueResultException;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.netsky.farmbackend.dao.BuyerDAO;
 import com.netsky.farmbackend.dto.Buyer;
+import com.netsky.farmbackend.dto.UserType;
 
 @Repository("BuyerDAO")
-@Transactional
+@Transactional	//(noRollbackFor = Exception.class)
 public class BuyerDAOImpl implements BuyerDAO{
-
 
 	@Autowired private SessionFactory sessionFactory;
 	
@@ -34,6 +36,22 @@ public class BuyerDAOImpl implements BuyerDAO{
 	@Override
 	public Buyer get(int id) {
 		return sessionFactory.getCurrentSession().get(Buyer.class, Integer.valueOf(id));
+	}
+	
+	//Retrieve a buyer based on its fbId 
+	@Override
+	public Buyer getByFbBuyerId(String fbId) {
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM Buyer WHERE FbBuyerId =:fbId "); 
+		query.setParameter("fbId", fbId);
+		
+		List r = query.getResultList();
+		
+		if (r.isEmpty())
+				return null;
+		else if (r.size() == 1) 
+			return (Buyer)r.get(0);
+		
+		throw new NonUniqueResultException();
 	}
 
 	@Override

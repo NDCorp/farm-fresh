@@ -8,7 +8,7 @@
         <div class="row ftco-custom-gutters mb-4">
             <!-- User name -->
             <div class="col-md-12">
-                <p id="lnkMyProducts" class="col-md-6 d-inline-block"><a href="${contextRoot}/buyers.html">User <%//=userName %></a></p> 
+                <p id="lnkMyProducts" class="col-md-6 d-inline-block"><a href="${contextRoot}/buyers.html"><%=(String) session.getAttribute("currentuser") %></a></p> 
             </div>
             
             <!-- Button Options -->

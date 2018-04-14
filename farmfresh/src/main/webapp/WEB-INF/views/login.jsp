@@ -33,7 +33,7 @@
     <meta name="author" content="Free-Template.co Custoomized for Capstone project - Conestoga College" />
 
     <link rel="stylesheet" href="${css}/style.css">
- 
+
     <script type="text/javascript" src="${js}/jquery.min.js"></script> 
     <script type="text/javascript" src="${js}/popper.min.js"></script>
     <script type="text/javascript" src="${js}/bootstrap.min.js"></script>
@@ -46,7 +46,7 @@
 
     <script type="text/javascript" src="${js}/custom.js"></script>
     <script type="text/javascript" src="${js}/main.js"></script>
-	<script type="text/javascript" src="${js}/oauth-fb.js"></script> 
+    <script type="text/javascript" src="${js}/oauth-fb.js"></script> 
     <!-- <script type="text/javascript" src="${js}/google-map.js"></script> -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuW_Vur6YjDppRXkKHfPesWJodQG7_Wog&libraries=places&callback=initAutocomplete" async defer></script>
    

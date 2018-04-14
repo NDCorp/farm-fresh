@@ -8,6 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,9 +22,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Product {
 
 	@Id
+	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int farmersId;
+	
+	@ManyToOne
+	@JoinColumn(name="farmersId", referencedColumnName="id")
+	private Farmer farmer;
 	private int promotionsId;
 	private int itemTypesId;
 	
@@ -48,13 +56,12 @@ public class Product {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public int getFarmersId() {
-		return farmersId;
+	public Farmer getFarmer() {
+		return farmer;
 	}
 
-	public void setFarmersId(int farmersId) {
-		this.farmersId = farmersId;
+	public void setFarmer(Farmer farmer) {
+		this.farmer = farmer;
 	}
 
 	public int getPromotionsId() {
@@ -131,7 +138,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", farmersId=" + farmersId + ", promotionsId=" + promotionsId + ", itemTypesId=" + itemTypesId + ", Name="
+		return "Product [id=" + id + ", farmersId=" + farmer.toString() + ", promotionsId=" + promotionsId + ", itemTypesId=" + itemTypesId + ", Name="
 				+ name + ", description=" + description + ", quantity=" + quantity + ", price=" + unitPrice
 				+ ", isActive=" + active + ", dateCreated=" + dateCreated + ", dateDeleted=" + dateDeleted + "]";
 	}

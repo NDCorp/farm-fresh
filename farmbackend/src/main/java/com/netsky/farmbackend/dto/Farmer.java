@@ -1,5 +1,6 @@
 package com.netsky.farmbackend.dto;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +17,8 @@ import javax.persistence.Table;
 public class Farmer extends User{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id; 
 	
 	//private int usersId; 
@@ -30,11 +32,11 @@ public class Farmer extends User{
 	private FarmerType farmerType;
 	private String positionName;
 	private String webSite;
-	
+	/*
 	@OneToOne
 	@JoinColumn(name="usersId") //, referencedColumnName="id"
 	private User user; 
-	
+	*/
 	public int getId() {
 		return id;
 	}
@@ -66,13 +68,14 @@ public class Farmer extends User{
 	public void setFarmerType(FarmerType farmerType) {
 		this.farmerType = farmerType;
 	}
+	/*
 	public User getUser() {
 		return user;
 	}
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+	*/
 	
 	
 }

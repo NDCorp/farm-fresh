@@ -1,5 +1,6 @@
 package com.netsky.farmbackend.dto;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,37 +14,41 @@ import javax.persistence.Table;
 @Table(name="Buyers")
 //@PrimaryKeyJoinColumn(name="usersId")
 public class Buyer extends User{
-
+/*
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+	*/
 	//private int usersId; 
 	
 	private String fbBuyerId;
 	
+	/*
 	@OneToOne
-	@JoinColumn(name="usersId")	//, referencedColumnName="id"
-	private User user;
-	
+	@JoinColumn(name="Id",referencedColumnName="id")
+	private User user;*/
+/*
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+	*/
 	public String getFbBuyerId() {
 		return fbBuyerId;
 	}
 	public void setFbBuyerId(String fbBuyerId) {
 		this.fbBuyerId = fbBuyerId;
 	}
+	/*
 	public User getUser() {
 		return user;
 	}
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+*/
 	
 }

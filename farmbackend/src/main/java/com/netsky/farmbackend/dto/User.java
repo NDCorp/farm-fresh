@@ -2,6 +2,7 @@ package com.netsky.farmbackend.dto;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,15 +15,16 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Users")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)	//JOINED
+@Inheritance(strategy = InheritanceType.JOINED)	//JOINED TABLE_PER_CLASS
 public abstract class User {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name="userTypesId") //, referencedColumnName="id"
+	@JoinColumn(name="userTypesId", referencedColumnName="id") //, referencedColumnName="id"
 	private UserType userType;
 	private String firstName;
 	private String lastName;

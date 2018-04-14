@@ -9,6 +9,8 @@ public interface BuyerDAO {
 	public List<Buyer> list();
 
 	public Buyer get(int id);
+	
+	public Buyer getByFbBuyerId(String fbId);
 
 	public boolean add(Buyer buyer);
 
