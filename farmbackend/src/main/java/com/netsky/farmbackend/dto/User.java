@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Users")
-@Inheritance(strategy = InheritanceType.JOINED)	//JOINED TABLE_PER_CLASS
+@Inheritance(strategy = InheritanceType.JOINED)	
 public abstract class User {
 	
 	@Id
@@ -24,7 +24,7 @@ public abstract class User {
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name="userTypesId", referencedColumnName="id") //, referencedColumnName="id"
+	@JoinColumn(name="userTypesId", referencedColumnName="id") 
 	private UserType userType;
 	private String firstName;
 	private String lastName;

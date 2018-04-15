@@ -9,9 +9,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Packs")
 public class Pack extends Item{
+	//Will inherit from Item class
+	//add specific properties of Pack here...
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
-	private int id;
-	private int itemsId;
+	
 }

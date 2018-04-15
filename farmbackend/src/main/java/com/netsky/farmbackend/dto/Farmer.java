@@ -1,46 +1,23 @@
 package com.netsky.farmbackend.dto;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="Farmers")
 public class Farmer extends User{
-
-	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id; 
-	
-	//private int usersId; 
+	//Will inherit from User class
+	//add specific properties of Farmer here...
 	@ManyToOne
-	@JoinColumn(name="farmsId") //, referencedColumnName="id"
-	private Farm farm;
-	
+	@JoinColumn(name="farmsId", referencedColumnName="id") 
+	private Farm farm;	
 	@ManyToOne
-	@JoinColumn(name="farmerTypeId") //, referencedColumnName="id"
+	@JoinColumn(name="farmerTypeId", referencedColumnName="id")
 	private FarmerType farmerType;
 	private String positionName;
 	private String webSite;
-	/*
-	@OneToOne
-	@JoinColumn(name="usersId") //, referencedColumnName="id"
-	private User user; 
-	*/
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getPositionName() {
 		return positionName;
@@ -65,15 +42,5 @@ public class Farmer extends User{
 	}
 	public void setFarmerType(FarmerType farmerType) {
 		this.farmerType = farmerType;
-	}
-	/*
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	*/
-	
-	
+	}	
 }

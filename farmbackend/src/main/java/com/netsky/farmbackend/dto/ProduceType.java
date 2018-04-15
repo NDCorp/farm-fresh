@@ -1,30 +1,36 @@
 package com.netsky.farmbackend.dto;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Categories")
-public class Category {
+@Table(name="ProduceTypes")
+public class ProduceType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@ManyToOne
+	@JoinColumn(name="categoriesId", referencedColumnName="id")
+	private Category category;
 	private String name;
 	private String description;
-	@Column(name="picture")
-	private String imageURL;
-	@Column(name="isactive")
-	private boolean active = true;
 	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	public String getName() {
 		return name;
@@ -37,25 +43,5 @@ public class Category {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public String getImageURL() {
-		return imageURL;
-	}
-	public void setImageURL(String imageURL) {
-		this.imageURL = imageURL;
-	}
-	public boolean isActive() {
-		return active;
-	}
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-	
-	@Override
-	public String toString() {
-		return "Category [id=" + id + ", name=" + name + ", description=" + description + ", picture=" + imageURL
-				+ ", isactive=" + active + "]";
-	}
-	
-	
+	}	
 }

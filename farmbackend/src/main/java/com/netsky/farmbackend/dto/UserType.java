@@ -9,7 +9,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name="UserTypes")
 public class UserType {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -33,6 +32,5 @@ public class UserType {
 	}
 	public void setType(String type) {
 		this.type = type;
-	}
-	
+	}	
 }

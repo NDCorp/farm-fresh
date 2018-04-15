@@ -1,38 +1,28 @@
 package com.netsky.farmbackend.dto;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
 @Entity
-@Table(name="Addresses")
-public class Address {
-	//A Trigger and Stored Prog takes care of the constraint to insert a farmer address or a farm address per row
-	//address_before_insert, address_before_update, check_address_owner, 
+@Table(name="OrderShippingPickups")
+public class OrderShippingPickup {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;	
-	//**** Must Test the impact of this annotation
-	@NotFound(action=NotFoundAction.IGNORE)
-	@OneToOne
-	@JoinColumn(name="usersId", referencedColumnName="id") 
-	private User user;
-	@NotFound(action=NotFoundAction.IGNORE)
-	@OneToOne
-	@JoinColumn(name="farmsId", referencedColumnName="id") 
-	private Farm farm;	
+	private int id;
 	@ManyToOne
-	@JoinColumn(name="addressTypesId", referencedColumnName="id") 
-	private AddressType addressType;
-	private String address;
+	@JoinColumn(name="orderItemsId", referencedColumnName="id")
+	private OrderItem orderItem;
+	private Date dateCreated;
+	private Date shippingDate;
+	private Date pickUpDate; 
+	private String address; 
 	private String city;
 	private String postalCode;
 	private String province;
@@ -44,23 +34,29 @@ public class Address {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public User getUser() {
-		return user;
+	public OrderItem getOrderItem() {
+		return orderItem;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setOrderItem(OrderItem orderItem) {
+		this.orderItem = orderItem;
 	}
-	public Farm getFarm() {
-		return farm;
+	public Date getDateCreated() {
+		return dateCreated;
 	}
-	public void setFarm(Farm farm) {
-		this.farm = farm;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
-	public AddressType getAddressType() {
-		return addressType;
+	public Date getShippingDate() {
+		return shippingDate;
 	}
-	public void setAddressType(AddressType addressType) {
-		this.addressType = addressType;
+	public void setShippingDate(Date shippingDate) {
+		this.shippingDate = shippingDate;
+	}
+	public Date getPickUpDate() {
+		return pickUpDate;
+	}
+	public void setPickUpDate(Date pickUpDate) {
+		this.pickUpDate = pickUpDate;
 	}
 	public String getAddress() {
 		return address;
@@ -92,6 +88,4 @@ public class Address {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	
-	
 }

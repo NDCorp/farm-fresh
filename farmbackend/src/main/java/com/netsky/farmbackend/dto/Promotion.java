@@ -1,6 +1,6 @@
 package com.netsky.farmbackend.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,18 +9,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Farms")
-public class Farm {
+@Table(name="Promotions")
+public class Promotion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String name;
-	private String description;
-	private String headLine;
-	private Date dateCreated;
-	private Date dateDeleted;
+	private String title; 
+	private String description; 
+	private double price; 
+	private Date dateCreated; 
+	private Date expirationDate; 
 	private boolean isActive;
-	private String picture;
 	
 	public int getId() {
 		return id;
@@ -28,11 +27,11 @@ public class Farm {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getDescription() {
 		return description;
@@ -40,11 +39,11 @@ public class Farm {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getHeadLine() {
-		return headLine;
+	public double getPrice() {
+		return price;
 	}
-	public void setHeadLine(String headLine) {
-		this.headLine = headLine;
+	public void setPrice(double price) {
+		this.price = price;
 	}
 	public Date getDateCreated() {
 		return dateCreated;
@@ -52,11 +51,11 @@ public class Farm {
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	public Date getDateDeleted() {
-		return dateDeleted;
+	public Date getExpirationDate() {
+		return expirationDate;
 	}
-	public void setDateDeleted(Date dateDeleted) {
-		this.dateDeleted = dateDeleted;
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
 	}
 	public boolean isActive() {
 		return isActive;
@@ -64,13 +63,4 @@ public class Farm {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-	public String getPicture() {
-		return picture;
-	}
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
-	
-	
-
 }

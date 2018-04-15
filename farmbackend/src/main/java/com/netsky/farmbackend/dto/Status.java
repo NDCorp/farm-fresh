@@ -7,12 +7,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="AddressTypes")
-public class AddressType {
+@Table(name="Status")
+public class Status {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private char acronym;
+	private char code; 
+	private String description;
 	
 	public int getId() {
 		return id;
@@ -20,12 +21,16 @@ public class AddressType {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public char getAcronym() {
-		return acronym;
+	public char getCode() {
+		return code;
 	}
-	public void setAcronym(char acronym) {
-		this.acronym = acronym;
+	public void setCode(char code) {
+		this.code = code;
 	}
-	
-	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }

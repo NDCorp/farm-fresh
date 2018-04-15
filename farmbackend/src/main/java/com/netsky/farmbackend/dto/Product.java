@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -19,19 +21,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 //Items dto
 @Entity
 @Table(name="Items")
+//@Inheritance(strategy = InheritanceType.JOINED)
 public class Product {
-
 	@Id
-	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
 	@ManyToOne
 	@JoinColumn(name="farmersId", referencedColumnName="id")
 	private Farmer farmer;
-	private int promotionsId;
-	private int itemTypesId;
-	
+	@ManyToOne
+	@JoinColumn(name="promotionsId", referencedColumnName="id")
+	private Promotion promotion;
+	@ManyToOne
+	@JoinColumn(name="itemTypesId", referencedColumnName="id")
+	private ItemType itemType;
 	private String name;
 	private String description;
 	@Column(name= "quantities")
@@ -64,20 +67,20 @@ public class Product {
 		this.farmer = farmer;
 	}
 
-	public int getPromotionsId() {
-		return promotionsId;
+	public Promotion getPromotion() {
+		return promotion;
 	}
 
-	public void setPromotionsId(int promotionsId) {
-		this.promotionsId = promotionsId;
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
 	}
 
-	public int getItemTypesId() {
-		return itemTypesId;
+	public ItemType getItemType() {
+		return itemType;
 	}
 
-	public void setItemTypesId(int itemTypesId) {
-		this.itemTypesId = itemTypesId;
+	public void setItemType(ItemType itemType) {
+		this.itemType = itemType;
 	}
 
 	public String getName() {
@@ -138,99 +141,8 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", farmersId=" + farmer.toString() + ", promotionsId=" + promotionsId + ", itemTypesId=" + itemTypesId + ", Name="
+		return "Product [id=" + id + ", farmersId=" + farmer.getId() + ", promotionsId=" + promotion.getId() + ", itemTypesId=" + itemType.getId() + ", Name="
 				+ name + ", description=" + description + ", quantity=" + quantity + ", price=" + unitPrice
 				+ ", isActive=" + active + ", dateCreated=" + dateCreated + ", dateDeleted=" + dateDeleted + "]";
-	}
-	
-	/*
-	private String code;
-	private String brand;
-	@Column(name= "category_id")
-	@JsonIgnore
-	private int categoryId;
-	@Column(name= "supplier_id")
-	@JsonIgnore
-	private int supplierId;
-	private int purchases;
-	private int views;
-	*/
-
-	/*
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getBrand() {
-		return brand;
-	}
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public double getUnitPrice() {
-		return unitPrice;
-	}
-	public void setUnitPrice(double unitPrice) {
-		this.unitPrice = unitPrice;
-	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-	public boolean isActive() {
-		return active;
-	}
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-	public int getCategoryId() {
-		return categoryId;
-	}
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
-	}
-	public int getSupplierId() {
-		return supplierId;
-	}
-	public void setSupplierId(int supplierId) {
-		this.supplierId = supplierId;
-	}
-	public int getPurchases() {
-		return purchases;
-	}
-	public void setPurchases(int purchases) {
-		this.purchases = purchases;
-	}
-	public int getViews() {
-		return views;
-	}
-	public void setViews(int views) {
-		this.views = views;
-	}
-	*/
-
-	
-	
+	}	
 }
