@@ -15,7 +15,7 @@ import com.netsky.farmbackend.dto.Buyer;
 import com.netsky.farmbackend.dto.UserType;
 
 @Repository("BuyerDAO")
-@Transactional	//(noRollbackFor = Exception.class)
+@Transactional	
 public class BuyerDAOImpl implements BuyerDAO{
 
 	@Autowired private SessionFactory sessionFactory;
@@ -28,8 +28,6 @@ public class BuyerDAOImpl implements BuyerDAO{
 		query.setParameter("active", true);
 		
 		return query.getResultList();
-		
-		//return sessionFactory.getCurrentSession().createQuery("FROM Buyer", Buyer.class).getResultList();
 	}
 
 	//Retrieve a buyer based on its ID 

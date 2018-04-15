@@ -25,8 +25,6 @@ public class FarmerDAOImpl implements FarmerDAO{
 		query.setParameter("active", true);
 		
 		return query.getResultList();
-		
-		//return sessionFactory.getCurrentSession().createQuery("FROM Farmer ", Farmer.class).getResultList();
 	}
 
 	//Retrieve a farmer based on its ID 

@@ -13,7 +13,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Farmers")
-//@PrimaryKeyJoinColumn(name="usersId")
 public class Farmer extends User{
 
 	@Id
@@ -22,7 +21,6 @@ public class Farmer extends User{
 	private int id; 
 	
 	//private int usersId; 
-	
 	@ManyToOne
 	@JoinColumn(name="farmsId") //, referencedColumnName="id"
 	private Farm farm;

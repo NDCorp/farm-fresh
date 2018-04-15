@@ -29,9 +29,6 @@ public class ToolBox {
 			buffer.append(String.format("%02x", b & 0xff));
 		}
 
-		//System.out.println("original:" + arg);
-		//System.out.println("digested(hex):" + buffer.toString());
-		
 		return buffer.toString();
 	}
 }

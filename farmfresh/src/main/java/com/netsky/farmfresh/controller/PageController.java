@@ -71,14 +71,12 @@ public class PageController {
 				session.setAttribute("username", buyer.getEmail());
 				session.setAttribute("pass", buyer.getPassword());	//fake password
 				session.setAttribute("name", buyer.getFirstName());
-				session.setMaxInactiveInterval(1200);
+				session.setMaxInactiveInterval(120);
 				
 				//** Save cookie user variables. set cookie to expire in 2 min = 120sec
 				Cookie userName =  new Cookie("username", buyer.getEmail());
-				userName.setMaxAge(1200);
+				userName.setMaxAge(120);
 				resp.addCookie(userName); 
-				
-				//mv.addObject("username", buyer.getFirstName());
 			}
 		}
 		catch (Exception ex)
@@ -162,8 +160,7 @@ public class PageController {
 				*/
 				
 				//Add a new buyer in the db with fb data
-				buyerDAO.add(buyer);
-			
+				buyerDAO.add(buyer);			
 			}
 			
 			//avoid to return a buyer, use session variables
@@ -185,8 +182,6 @@ public class PageController {
 		ModelAndView mv = new ModelAndView("login");
 		mv.addObject("title", "Login");
 		
-		//passing type of users
-		//mv.addObject("userTypes", userTypeDAO.list());
 		mv.addObject("userClickedLogin", true);
 		return mv;
 	}
@@ -196,19 +191,9 @@ public class PageController {
 	 * */
 	//@RequestMapping(value = "/logout")
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
-	public String Logout(HttpSession session) {
-		
+	public String Logout(HttpSession session) {		
 		session.invalidate();
         return "redirect:/index";
-        /*
-		ModelAndView mv = new ModelAndView("logout");
-		mv.addObject("title", "logout");
-		
-		//passing type of users
-		//mv.addObject("userTypes", userTypeDAO.list());
-		mv.addObject("userClickedLogout", true);
-		return mv;
-		*/
 	}
 	
 	/*
