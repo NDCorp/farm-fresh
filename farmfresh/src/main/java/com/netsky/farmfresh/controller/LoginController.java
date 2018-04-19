@@ -14,10 +14,14 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.netsky.farmbackend.dao.FarmerDAO;
 import com.netsky.farmbackend.dao.FarmerTypeDAO;
@@ -42,113 +46,161 @@ public class LoginController extends HttpServlet {
 	@Autowired FarmerTypeDAO fTypeDAO;
 	@Autowired UserTypeDAO uTypeDAO;
 	
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	
+	//Farmer or Admin create account (Registration)
+	@RequestMapping(value = "/registration", method = RequestMethod.POST)	
+	protected ModelAndView CreateUser(HttpServletRequest req, HttpServletResponse resp, RedirectAttributes redirectAttributes) 
+			throws ServletException, IOException {
 		
+		ModelAndView mv = new ModelAndView("redirect:/index");
 		HttpSession session = req.getSession(true);
 		String desc, pic, position, website, midName, uTypeId;
 		
 		try 
-		{		
-			//** First, create a new farm: DateDeleted = null, Is Active = true
-			Farm farm = new Farm();
-			farm.setName(req.getParameter("m_ffname"));
-			desc = req.getParameter("m_ffdescription");
-			farm.setDescription((!desc.isEmpty() || desc != null)? desc: null);
-			farm.setHeadLine(req.getParameter("m_ffheadline"));
-			farm.setDateCreated(ToolBox.GetCurrentDate());
-			pic = req.getParameter("m_fpicture");
-			farm.setPicture((!pic.isEmpty() || pic != null)? pic: null);
+		{	//if a user session exists, redirect to home with a message: user already connected..
+			if(session.getAttribute("username") != null)
+			{
+				//add a message: user already connected..
+				redirectAttributes.addFlashAttribute("message", session.getAttribute("username") + " is already connected.");
+			}
+			else //a user session doesn't exist, so open registration form to create a new one
+			{
+				//** First, create a new farm: DateDeleted = null, Is Active = true
+				Farm farm = new Farm();
+				farm.setName(req.getParameter("m_ffname"));
+				desc = req.getParameter("m_ffdescription");
+				farm.setDescription((!desc.isEmpty() || desc != null)? desc: null);
+				farm.setHeadLine(req.getParameter("m_ffheadline"));
+				farm.setDateCreated(ToolBox.GetCurrentDate());
+				pic = req.getParameter("m_fpicture");
+				farm.setPicture((!pic.isEmpty() || pic != null)? pic: null);
+				
+				//Create a new farm
+				farmDAO.add(farm);
+				
+				//** Second, Get the farmerType with Id = 1
+				FarmerType fType = new FarmerType();
+				fType = fTypeDAO.get(1);	
+				
+				//** Third, create a new farmer object and initialize its properties
+				Farmer farmer = new Farmer();
+				
+				//Get the userType
+				UserType uType = new UserType();
+				uTypeId = req.getParameter("select-utype");
+				uType = uTypeDAO.get(Integer.parseInt(uTypeId));
+				
+				//Create farmer
+				farmer.setUserType(uType);
+				farmer.setFirstName(req.getParameter("m_fname"));
+				farmer.setLastName(req.getParameter("m_lname"));
+				midName = req.getParameter("m_mname");
+				farmer.setMiddleName((!midName.isEmpty() || midName != null)? midName: null);
+				farmer.setEmail(req.getParameter("m_email"));
+				farmer.setPhone(req.getParameter("m_phone"));
+				farmer.setPassword(ToolBox.GetMD5(req.getParameter("m_password")));	//!!!! Annotations + Validate password m_password and m_cpassword
+				pic = req.getParameter("m_upicture");
+				farmer.setPicture((!pic.isEmpty() || pic != null)? pic: null);
+				farmer.setDateCreated(ToolBox.GetCurrentDate());
+				
+				farmer.setFarm(farm);
+				farmer.setFarmerType(fType);
+				position = req.getParameter("m_position");
+				farmer.setPositionName((!position.isEmpty() || position != null)? position: null);
+				website = req.getParameter("m_website");
+				farmer.setWebSite((!website.isEmpty() || website != null)? website: null);
+				
+				farmerDAO.add(farmer);
+				
+				//** Save session user variables. set session to expire in 2 min = 120sec
+				session.setAttribute("username", farmer.getEmail());
+				session.setAttribute("pass", farmer.getPassword());
+				session.setAttribute("name", farmer.getFirstName() + " " + farmer.getLastName());
+				session.setMaxInactiveInterval(120);
+				
+				//** Save cookie user variables. set cookie to expire in 2 min = 120sec
+				Cookie userName =  new Cookie("username", farmer.getEmail());
+				userName.setMaxAge(120);
+				resp.addCookie(userName);
+				
+				//Redirect to the home page
+				//resp.sendRedirect("index");
+				redirectAttributes.addFlashAttribute("message", session.getAttribute("username") + " created.");			
+			}	
 			
-			//Create a new farm
-			farmDAO.add(farm);
-			
-			//** Second, Get the farmerType with Id = 1
-			FarmerType fType = new FarmerType();
-			fType = fTypeDAO.get(1);	
-			
-			//** Third, create a new farmer object and initialize its properties
-			Farmer farmer = new Farmer();
-			
-			//Get the userType
-			UserType uType = new UserType();
-			uTypeId = req.getParameter("m_utype");
-			uType = uTypeDAO.get(Integer.parseInt(uTypeId));
-			
-			//Create farmer
-			farmer.setUserType(uType);
-			farmer.setFirstName(req.getParameter("m_fname"));
-			farmer.setLastName(req.getParameter("m_lname"));
-			midName = req.getParameter("m_mname");
-			farmer.setMiddleName((!midName.isEmpty() || midName != null)? midName: null);
-			farmer.setEmail(req.getParameter("m_email"));
-			farmer.setPhone(req.getParameter("m_phone"));
-			farmer.setPassword(ToolBox.GetMD5(req.getParameter("m_password")));	//!!!! Annotations + Validate password m_password and m_cpassword
-			pic = req.getParameter("m_upicture");
-			farmer.setPicture((!pic.isEmpty() || pic != null)? pic: null);
-			farmer.setDateCreated(ToolBox.GetCurrentDate());
-			
-			farmer.setFarm(farm);
-			farmer.setFarmerType(fType);
-			position = req.getParameter("m_position");
-			farmer.setPositionName((!position.isEmpty() || position != null)? position: null);
-			website = req.getParameter("m_website");
-			farmer.setWebSite((!website.isEmpty() || website != null)? website: null);
-			
-			farmerDAO.add(farmer);
-			
-			//** Save session user variables. set session to expire in 2 min = 120sec
-			session.setAttribute("username", farmer.getEmail());
-			session.setAttribute("pass", farmer.getPassword());
-			session.setAttribute("name", farmer.getFirstName() + " " + farmer.getLastName());
-			session.setMaxInactiveInterval(120);
-			
-			//** Save cookie user variables. set cookie to expire in 2 min = 120sec
-			Cookie userName =  new Cookie("username", farmer.getEmail());
-			userName.setMaxAge(120);
-			resp.addCookie(userName);
-			
-			//session.getAttribute("username");
-			//Redirect to the home page
-			resp.sendRedirect("index");
-		}
-		catch (Exception ex)
-		{
-			ex.printStackTrace();			
-		}
-	}
-	
-	
-	//Add or Create a new user. redirect to login if error
-	/*
-	@RequestMapping(value = "/farmer/add")
-	public ModelAndView addUser(@PathVariable("id") int id) {
-		
-		try
-		{
-			ModelAndView mv = new ModelAndView("login");
-			
-			//categoryDAO to fetch a single category
-			Farmer farmer = null;
-			farmer = farmerDAO.get(id);
-			
-			mv.addObject("title", farmer.getFirstName());
-			
-			//passing the list of farmer
-			mv.addObject("categories", farmerDAO.list());
-			
-			//passing the single farmer
-			mv.addObject("farmer", farmer);
-			
-			mv.addObject("userClickedCategoryProducts", true);
 			return mv;
 		}
 		catch (Exception ex)
 		{
-			//System.err.printf("Error class: " + ex.getClass() + " || Message: " + ex.getMessage());
+			ex.printStackTrace();
+			return new ModelAndView("redirect:/index");
+		}
+	}
+	
+	//Farmer or Admin Login 
+	@RequestMapping(value = "/loguserin", method = RequestMethod.POST)	
+	protected ModelAndView LogUserIn(HttpServletRequest req, HttpServletResponse resp, RedirectAttributes redirectAttributes) 
+			throws ServletException, IOException {
+		
+		ModelAndView mv;
+		HttpSession session = req.getSession(true);
+		String uName = "", uPassword = "", uBDPassword ="", rememberUser = "";
+		
+		try
+		{
+			//First, get user login informations
+			uName = req.getParameter("email");
+			uPassword = ToolBox.GetMD5(req.getParameter("login-password"));
+			rememberUser = req.getParameter("remember");
+			
+			//Second, find the user in the DB
+			Farmer farmer = new Farmer();
+			farmer = farmerDAO.getFarmerByEmail(uName);
+			
+			//If not found, return to login page with a message
+			if (farmer == null)
+			{
+				mv = new ModelAndView("redirect:/login");
+				redirectAttributes.addFlashAttribute("message", "Farmer or Admin account not found. Try again or create a new user.");			
+			}
+			else
+			{
+				//Validate password
+				uBDPassword = farmer.getPassword();
+				PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+				uPassword = passwordEncoder.encode(uPassword);
+				
+				//password not valid
+				if (!passwordEncoder.matches(uBDPassword, uPassword))
+				{
+					mv = new ModelAndView("redirect:/login");
+					redirectAttributes.addFlashAttribute("message", "Invalid password, please try again");				
+				}
+				else	//User found, password valid
+				{
+					mv = new ModelAndView("redirect:/index");
+					redirectAttributes.addFlashAttribute("message", farmer.getEmail() + " connected");
+					
+					//** Save session user variables. set session to expire in 2 min = 120sec
+					session.setAttribute("username", farmer.getEmail());
+					session.setAttribute("pass", farmer.getPassword());
+					session.setAttribute("name", farmer.getFirstName() + " " + farmer.getLastName());
+					session.setMaxInactiveInterval(120);
+					
+					//** Save cookie user variables. set cookie to expire in 2 min = 120sec
+					Cookie userName =  new Cookie("username", farmer.getEmail());
+					userName.setMaxAge(120);
+					resp.addCookie(userName);
+				}
+			}
+			
+			return mv;
+		}
+		catch (Exception ex)
+		{
 			ex.printStackTrace();
 			return new ModelAndView("redirect:/login");
 		}
 		
 	}
-	*/
 }

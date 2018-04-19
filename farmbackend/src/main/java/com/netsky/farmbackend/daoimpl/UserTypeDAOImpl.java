@@ -21,9 +21,9 @@ public class UserTypeDAOImpl implements UserTypeDAO{
 	public List<UserType> list() {
 		
 		//!!! Show only Buyer and Farmer
-		String selectAllUserType = "FROM UserType WHERE Acronym <> :admin"; 
+		String selectAllUserType = "FROM UserType WHERE Acronym = :farmer"; 
 		Query query = sessionFactory.getCurrentSession().createQuery(selectAllUserType);
-		query.setParameter("admin", 'A');
+		query.setParameter("farmer", 'F');
 		
 		return query.getResultList();
 		

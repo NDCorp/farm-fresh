@@ -2,6 +2,8 @@ package com.netsky.farmbackend.daoimpl;
 
 import java.util.List;
 
+import javax.persistence.NonUniqueResultException;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.netsky.farmbackend.dao.FarmerDAO;
+import com.netsky.farmbackend.dto.Buyer;
 import com.netsky.farmbackend.dto.Farmer;
+import com.netsky.farmbackend.dto.UserType;
 
 @Repository("FarmerDAO")
 @Transactional
@@ -33,6 +37,22 @@ public class FarmerDAOImpl implements FarmerDAO{
 		return sessionFactory.getCurrentSession().get(Farmer.class, Integer.valueOf(id));
 	}
 
+	//Retrieve a Farmer based on his email 
+	@Override
+	public Farmer getFarmerByEmail(String email) {
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM Farmer WHERE email =:email "); 
+		query.setParameter("email", email);
+		
+		List r = query.getResultList();
+		
+		if (r.isEmpty())
+				return null;
+		else if (r.size() == 1) 
+			return (Farmer)r.get(0);
+		
+		throw new NonUniqueResultException();
+	}
+	
 	@Override
 	public boolean add(Farmer farmer) {
 		try {

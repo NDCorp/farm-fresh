@@ -14,7 +14,7 @@ public class Farmer extends User{
 	@JoinColumn(name="farmsId", referencedColumnName="id") 
 	private Farm farm;	
 	@ManyToOne
-	@JoinColumn(name="farmerTypeId", referencedColumnName="id")
+	@JoinColumn(name="farmerTypesId", referencedColumnName="id")
 	private FarmerType farmerType;
 	private String positionName;
 	private String webSite;

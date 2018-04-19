@@ -87,8 +87,7 @@
 		<!-- Page Content -->
 		<div class="content">
 			 
-			
-			  
+ 
 			<!-- Load when you clicked Home -->
 			<c:if test="${userClickedHome == true}">
 				<%@include file="home.jsp"%>

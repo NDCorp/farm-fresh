@@ -73,6 +73,11 @@
  
 	<section class="ftco-section mx-auto" id="section-login"> 
         <div class="container">
+        	<!-- Message -->
+        	<div style="color: #FFCCCC; margin: .25em auto; text-align: center;">
+        		${message}
+        	</div>
+        	
             <div class="col-sm-12 text-center login-logo">
                 <a href="index.html">
                     <img src="${images}/logo_transp.png" alt="Logo">
@@ -90,14 +95,6 @@
 						-->
 						<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
 						</fb:login-button>
-						
-						<!--
-						<a id="facebook-oauth" href="#">
-							<div class=" logo-oauth">  
-								<i class="fab fa-facebook-square" title="Facebook"></i>
-							</div>
-						</a>
-						-->
 					
                     <a id="google-oauth" class="d-none" href="https://accounts.google.com/ServiceLogin/identifier?hl=en&passive=true&continue=https%3A%2F%2Fwww.google.ca%2F%3Fgfe_rd%3Dcr%26dcr%3D0%26ei%3DUdK5WtXAK4jPXt_NkOAG&flowName=GlifWebSignIn&flowEntry=AddSession">
                         <div class="logo-oauth">
@@ -108,7 +105,7 @@
             </div><!-- END oauth login Button -->
 
             <div>          
-                <form data-ng-controller="" action="" id="login-form" method="post">
+                <form id="login-form" action="loguserin" method="post">
                 
                     <div class="form-group">
                         <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required="" autofocus=""> 
@@ -120,7 +117,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="w-75 mx-auto">
-                                <input type="checkbox" id="remember" value="remember-me">  
+                                <input type="checkbox" id="remember" name="remember">  
                                 <label for="remember">Remember Me</label>
                             </div>
                         </div>
@@ -156,7 +153,7 @@
                     </button>
                     <h1 class="mb-4">Create a new user</h1>  
                     <!-- Form to add user -->
-                    <form action="login" method="post">
+                    <form id="userRegForm" action="registration" method="post">
                         <!-- User Type: here show only Buyer and Farmer -->
                         <div class="row">
                             <label for="m_utype">Select User Type</label>
@@ -164,14 +161,9 @@
 	                            <c:forEach items="${userTypes}" var="userType">
 	                            	<option value="${userType.id}">${userType.type}</option>
 	                            </c:forEach>
-	                            <!-- 
-                                <option value="1" selected>Buyer</option>
-                                <option value="2">Farmer</option>
-                                <option value="3">Administrator</option>
-                                -->
-                            </select>
-                            
+                            </select>                          
                         </div>
+                        
                         <!-- Specific fields for Farmer to create a farm first -->
                         <fieldset class="my-2 form-farm-fields">
                             <legend>Farm Information</legend>
@@ -182,14 +174,14 @@
                             -->
                             <div class="row">
                                 <div class="col-md-12 form-group">
-                                    <input type="checkbox" id="farm_as_farmer" checked></input>
+                                    <input type="checkbox" name="farm_as_farmer" id="farm_as_farmer" checked></input>
                                     <label for="farm_as_farmer">Farm address same as Farmer address</label>
                                 </div>
                             </div>
                             <div class="farm-address">
                                 <div class="row">
                                     <div class="col-md-12 form-group" id="farmlocationField">
-                                        <input type="text" id="autocompleteFarm" placeholder="Enter your address"
+                                        <input type="text" name="autocompleteFarm" id="autocompleteFarm" placeholder="Enter your address"
                                             onFocus="geolocate()" class="form-control"></input>
                                     </div>
                                 </div>
@@ -197,35 +189,35 @@
                                 <div class="row">
                                     <div class="col-md-2 form-group">
                                         <!-- <label for="appart_number">Appartment</label> -->
-                                        <input type="text" class="field form-control" id="appart_number_farm" placeholder="Appart" disabled="true"></input>
+                                        <input type="text" class="field form-control" name="appart_number_farm" id="appart_number_farm" placeholder="Appart" disabled="true"></input>
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <!-- <label for="street_number">Number</label> -->
-                                        <input type="number" class="field form-control" id="street_number_farm" placeholder="Number" disabled="true"></input>
+                                        <input type="number" class="field form-control" name="street_number_farm" id="street_number_farm" placeholder="Number" disabled="true"></input>
                                     </div>
                                     <div class="col-md-8 form-group">
                                         <!-- <label for="route">Street name</label> -->
-                                        <input class="field form-control" id="route_farm" disabled="true" placeholder="Street name"></input></td>
+                                        <input class="field form-control" name="route_farm" id="route_farm" disabled="true" placeholder="Street name"></input>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 form-group">
                                         <!-- <label for="locality">City</label> -->
-                                        <input type="number" class="field form-control" id="locality_farm" placeholder="City" disabled="true"></input>
+                                        <input type="number" class="field form-control" name="locality_farm" id="locality_farm" placeholder="City" disabled="true"></input>
                                     </div>
                                     <div class="col-md-6 form-group">
                                         <!-- <label for="administrative_area_level_1">Province</label> -->
-                                        <input class="field form-control" id="administrative_area_level_1_farm" placeholder="Province" disabled="true"></input></td>
+                                        <input class="field form-control" name="administrative_area_level_1_farm" id="administrative_area_level_1_farm" placeholder="Province" disabled="true"></input>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3 form-group">
                                         <!-- <label for="postal_code">Postal code</label> -->
-                                        <input type="number" class="field form-control" id="postal_code_farm" placeholder="Postal code" disabled="true"></input>
+                                        <input type="number" class="field form-control" name="postal_code_farm" id="postal_code_farm" placeholder="Postal code" disabled="true"></input>
                                     </div>
                                     <div class="col-md-9 form-group">
                                         <!-- <label for="country_farm">Country</label> -->
-                                        <input class="field form-control" id="country_farm" disabled="true" placeholder="Country"></input></td>
+                                        <input class="field form-control" name="country_farm" id="country_farm" disabled="true" placeholder="Country"></input>
                                     </div>
                                 </div>
                             </div><!-- END Farm Address -->
@@ -234,26 +226,26 @@
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="m_ffname">Farm Name</label>
-                                    <input type="text" class="form-control" id="m_ffname" required></input>
+                                    <input type="text" class="form-control" name="m_ffname" id="m_ffname" required></input>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="m_ffheadline">Head Line</label>
-                                    <input type="text" class="form-control" id="m_ffheadline" required></input>
+                                    <input type="text" class="form-control" name="m_ffheadline" id="m_ffheadline" required></input>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="m_ffdescription">Description</label>
-                                    <textarea class="form-control" id="m_ffdescription" cols="40" rows="5"></textarea>
+                                    <textarea class="form-control" name="m_ffdescription" id="m_ffdescription" cols="40" rows="5"></textarea>
                                 </div>
                             </div>
                             <!-- Add farm Picture -->
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="m_fpicture">Upload Farm Picture (PNG, JPG)</label>
-                                    <input type="file" class="form-control" id="m_fpicture" accept="image/png, image/jpeg, image/jpg"></input>
+                                    <input type="file" class="form-control" name="m_fpicture" id="m_fpicture" accept="image/png, image/jpeg, image/jpg"></input>
                                 </div>
                             </div>
                             <div class="row">
@@ -272,7 +264,7 @@
                             -->
                             <div class="row">
                                 <div class="col-md-12 form-group" id="locationField">
-                                    <input type="text" id="autocomplete" placeholder="Enter your address"
+                                    <input type="text" name="autocomplete" id="autocomplete" placeholder="Enter your address"
                                         onFocus="geolocate()" class="form-control"></input>
                                 </div>
                             </div>
@@ -280,35 +272,35 @@
                             <div class="row">
                                 <div class="col-md-2 form-group">
                                     <!-- <label for="appart_number">Appartment</label> -->
-                                    <input type="text" class="field form-control" id="appart_number" placeholder="Appart" disabled="true"></input>
+                                    <input type="text" class="field form-control" name="appart_number" id="appart_number" placeholder="Appart" disabled="true"></input>
                                 </div>
                                 <div class="col-md-2 form-group">
                                     <!-- <label for="street_number">Number</label> -->
-                                    <input type="number" class="field form-control" id="street_number" placeholder="Number" disabled="true" required></input>
+                                    <input type="number" class="field form-control" name="street_number" id="street_number" placeholder="Number" disabled="true" required></input>
                                 </div>
                                 <div class="col-md-8 form-group">
                                     <!-- <label for="route">Street name</label> -->
-                                    <input class="field form-control" id="route" disabled="true" placeholder="Street name" required></input></td>
+                                    <input class="field form-control" name="route" id="route" disabled="true" placeholder="Street name" required></input></td>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <!-- <label for="locality">City</label> -->
-                                    <input type="number" class="field form-control" id="locality" placeholder="City" disabled="true" required></input>
+                                    <input type="number" class="field form-control" name="locality" id="locality" placeholder="City" disabled="true" required></input>
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <!-- <label for="administrative_area_level_1">Province</label> -->
-                                    <input class="field form-control" id="administrative_area_level_1" placeholder="Province" disabled="true" required></input></td>
+                                    <input class="field form-control" name="administrative_area_level_1" id="administrative_area_level_1" placeholder="Province" disabled="true" required></input></td>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-3 form-group">
                                     <!-- <label for="postal_code">Postal code</label> -->
-                                    <input type="number" class="field form-control" id="postal_code" placeholder="Postal code" disabled="true" required></input>
+                                    <input type="number" class="field form-control" name="postal_code" id="postal_code" placeholder="Postal code" disabled="true" required></input>
                                 </div>
                                 <div class="col-md-9 form-group">
                                     <!-- <label for="country">Country</label> -->
-                                    <input class="field form-control" id="country" disabled="true" placeholder="Country" required></input></td>
+                                    <input class="field form-control" name="country" id="country" disabled="true" placeholder="Country" required></input></td>
                                 </div>
                             </div><!-- END Farmer Address -->
 
@@ -316,42 +308,42 @@
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="m_fname">First Name</label>
-                                    <input type="text" class="form-control" id="m_fname" required>
+                                    <input type="text" class="form-control" name="m_fname" id="m_fname" required>
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="m_lname">Last Name</label>
-                                    <input type="text" class="form-control" id="m_lname" required>
+                                    <input type="text" class="form-control" name="m_lname" id="m_lname" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="m_mname">Middle Name</label>
-                                    <input type="text" class="form-control" id="m_mname">
+                                    <input type="text" class="form-control" name="m_mname" id="m_mname">
                                 </div>
                             </div>
                             <!-- Email -->
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="m_email">Email</label>
-                                    <input type="email" class="form-control" id="m_email" required>
+                                    <input type="email" class="form-control" name="m_email" id="m_email" required>
                                 </div>
                             </div>
                             <!-- Phone -->
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="m_phone">Phone</label>
-                                    <input type="text" class="form-control" id="m_phone" required>
+                                    <input type="text" class="form-control" name="m_phone" id="m_phone" required>
                                 </div>
                             </div>
                             <!-- Password -->
                             <div class="row">
                                 <div class="col-md-6 form-group">
                                     <label for="m_password">Password</label>
-                                    <input type="password" class="form-control" id="m_password" required>
+                                    <input type="password" class="form-control" name="m_password" id="m_password" required>
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label for="m_cpassword">Confirm password</label>
-                                    <input type="password" class="form-control" id="m_cpassword" required>
+                                    <input type="password" class="form-control" name="m_cpassword" id="m_cpassword" required>
                                 </div>
                                 <div></div>
                             </div>
@@ -359,7 +351,7 @@
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="m_upicture">Upload Your Picture (PNG, JPG)</label>
-                                    <input type="file" class="form-control" id="m_upicture" accept="image/png, image/jpeg, image/jpg"></input>
+                                    <input type="file" class="form-control" name="m_upicture" id="m_upicture" accept="image/png, image/jpeg, image/jpg"></input>
                                 </div>
                             </div>
                             <div class="row">
@@ -375,13 +367,13 @@
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="m_position">Position Name</label>
-                                    <input type="text" class="form-control" id="m_position"></input>
+                                    <input type="text" class="form-control" name="m_position" id="m_position"></input>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 form-group">
                                     <label for="m_website">Web Site URL</label>
-                                    <input type="url" class="form-control" id="m_website"></input>
+                                    <input type="url" class="form-control" name="m_website" id="m_website"></input>
                                 </div>
                             </div>
                         </fieldset>

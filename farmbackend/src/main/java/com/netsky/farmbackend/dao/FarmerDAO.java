@@ -9,6 +9,8 @@ public interface FarmerDAO {
 	public List<Farmer> list();
 
 	public Farmer get(int id);
+	
+	public Farmer getFarmerByEmail(String email);
 
 	public boolean add(Farmer farmer);
 

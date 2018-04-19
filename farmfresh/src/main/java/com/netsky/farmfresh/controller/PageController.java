@@ -90,8 +90,6 @@ public class PageController {
 		return mv;
 	}	
 
-
-	
 	/*
 	 * Methods to get data from facebook API
 	 * */
@@ -177,13 +175,41 @@ public class PageController {
 	 * Methods to load all login
 	 * */
 	@RequestMapping(value = "/login")
-	public ModelAndView Login() {
+	public ModelAndView Login(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException {
 		
-		ModelAndView mv = new ModelAndView("login");
-		mv.addObject("title", "Login");
+		ModelAndView mv;
 		
-		mv.addObject("userClickedLogin", true);
-		return mv;
+		try
+		{
+			//Get the session to avoid the login page if the user is connected
+			HttpSession session = req.getSession(true);
+			
+			//if session exists and user connected, Redirect to home with a message: user already connected..
+			if(session.getAttribute("username") != null) 
+			{
+				//add a message: user already connected..
+				mv = new ModelAndView("redirect:/index");
+				mv.addObject("message", "User " + session.getAttribute("username") + " already connected.");
+				return mv;
+			}
+			else //if a user is not connected, open the view Login
+			{
+				mv = new ModelAndView("login");
+				mv.addObject("title", "Login");
+				//mv.addObject("msglogin", "test");
+				
+				//passing the list of userTypes for registration form
+				mv.addObject("userTypes", userTypeDAO.list());
+				mv.addObject("userClickedLogin", true);
+				return mv;
+			}			
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+			return new ModelAndView("redirect:/index");
+		}	
 	}
 
 	/*

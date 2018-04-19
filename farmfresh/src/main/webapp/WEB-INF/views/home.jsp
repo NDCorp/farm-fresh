@@ -3,15 +3,16 @@
 
 <!-- Home content -->
 <div class="container">
-
+  <!-- Message -->
+  <div style="color: #FF9999; margin: .25em auto; text-align: center;">
+  	${message}
+  </div>
+    
   <div class="row">
 
     <div class="col-lg-3">
-<%@include file="./shared/sidebar.jsp" %>
-      
-
+		<%@include file="./shared/sidebar.jsp" %>
     </div>
-    <!-- /.col-lg-3 -->
 
     <div class="col-lg-9">
 
