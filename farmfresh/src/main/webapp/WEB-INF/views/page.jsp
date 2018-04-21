@@ -1,4 +1,3 @@
-<%@page import="com.netsky.farmfresh.controller.OAuthController"%>
 <%@page import="com.netsky.farmfresh.tools.controller.ToolBox"%>
 <%@page import="com.netsky.farmbackend.dto.Buyer"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -138,11 +137,6 @@
 		<!-- Footer -->
 		<%@include file="./shared/footer.jsp"%>
 
-
-		<!-- Bootstrap core JavaScript -->
-		<!-- <script src="${js}/jquery.js"></script> -->
-		<!-- <script src="${js}/bootstrap.bundle.min.js"></script> -->
-		
 		<!-- Data Table -->
 		<script src="${js}/jquery.dataTables.js"></script>
 
