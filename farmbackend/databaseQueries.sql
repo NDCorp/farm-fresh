@@ -348,8 +348,7 @@ DELIMITER $$
 	END$$   
 DELIMITER ;
 
--- Insert
---*********************** INSERT SOME DATA IN THE DATABASE TABLES ***********************
+-- Insert *********************** INSERT SOME DATA IN THE DATABASE TABLES ***********************
 
 INSERT INTO Categories (Name, Description, Picture, IsActive) VALUES ('Fruits', 'This is description for Fruits.', 'fruits-cat.png', true);
 INSERT INTO Categories (Name, Description, Picture, IsActive) VALUES ('Vegetables', 'This is description for Vegetables.', 'vegetables-cat.png', true);
@@ -395,4 +394,3 @@ SELECT * FROM Status;
 INSERT INTO users (UserTypesID,FirstName, LastName,MiddleName, email, Phone,Password,Picture, DateCreated, DateDeleted, IsActif) 
 values (2, 'John', 'Doe', null, 'john.doe@test.ca', null, md5('12345'), null, '2018-04-11', null, 1);
 
-INSERT INTO buyers(fbbuyerid) values ('123456789')
