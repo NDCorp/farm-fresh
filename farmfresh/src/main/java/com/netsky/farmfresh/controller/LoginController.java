@@ -46,7 +46,6 @@ public class LoginController extends HttpServlet {
 	@Autowired FarmerTypeDAO fTypeDAO;
 	@Autowired UserTypeDAO uTypeDAO;
 	
-	
 	//Farmer or Admin create account (Registration)
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)	
 	protected ModelAndView CreateUser(HttpServletRequest req, HttpServletResponse resp, RedirectAttributes redirectAttributes) 
@@ -178,7 +177,7 @@ public class LoginController extends HttpServlet {
 				}
 				else	//User found, password valid
 				{
-					mv = new ModelAndView("redirect:/index");
+					mv = new ModelAndView("redirect:/farmers");
 					redirectAttributes.addFlashAttribute("message", farmer.getEmail() + " connected");
 					
 					//** Save session user variables. set session to expire in 2 min = 120sec
