@@ -1,3 +1,4 @@
+
 package com.netsky.farmbackend.dto;
 
 import java.util.Date;
@@ -38,9 +39,75 @@ public abstract class Item {
 	@Column(name= "price")
 	@JsonIgnore
 	private double unitPrice;
-	@Column(name= "isactive")
 	@JsonIgnore
-	private boolean active;
+	private boolean isActive;
 	private Date dateCreated;
-	private Date dateDeleted;	
+	private Date dateDeleted;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public Farmer getFarmer() {
+		return farmer;
+	}
+	public void setFarmer(Farmer farmer) {
+		this.farmer = farmer;
+	}
+	public Promotion getPromotion() {
+		return promotion;
+	}
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
+	}
+	public ItemType getItemType() {
+		return itemType;
+	}
+	public void setItemType(ItemType itemType) {
+		this.itemType = itemType;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public double getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
+	}
+	public double getUnitPrice() {
+		return unitPrice;
+	}
+	public void setUnitPrice(double unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+	public boolean isActive() {
+		return isActive;
+	}
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+	public Date getDateDeleted() {
+		return dateDeleted;
+	}
+	public void setDateDeleted(Date dateDeleted) {
+		this.dateDeleted = dateDeleted;
+	}	
 }

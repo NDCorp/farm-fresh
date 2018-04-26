@@ -127,7 +127,7 @@
               <small>CLOSE </small><span aria-hidden="true">&times;</span>
             </button>
             <h1 class="mb-4">Create a new Produce</h1>  
-            <form asp-controller="" asp-action="#" method="post">                 
+            <form id="CreateProduceForm" action="createproduce" method="post">                 
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label for="m_prodpicture">Upload your produce's pictures here (PNG, JPG)</label>
@@ -216,5 +216,217 @@
       </div>
     </div>
   </div>
-</div>
-<!-- createProduceModal: MODAL FORM -->  
+</div><!-- END createProduceModal: MODAL FORM -->  
+
+<!-- createPackModal: MODAL FORM -->
+<div class="modal fade" id="createPackageModal" tabindex="-1"
+	role="dialog" aria-labelledby="createPackageModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-body p-0">
+
+				<div class="col-lg-12 p-5">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<small>CLOSE </small><span aria-hidden="true">&times;</span>
+					</button>
+					<h1 class="mb-4">Create a new Package</h1>
+					<form id="createPackForm" action="createpack" method="post">
+						<div class="row">
+							<div class="col-md-12 form-group">
+								<label class="" for="m_prodpicture">Upload your
+									package's pictures here (PNG, JPG)</label>
+								<!-- *** Need a JS or .Net method to resize pictures -->
+								<input type="file" class="form-control" id="m_prodpicture"
+									accept="image/png, image/jpeg, image/jpg" multiple>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 form-group">
+								<label for="prodName">Name of a package:</label> <input
+									type="text" id="prodName" class="form-control" required>
+							</div>
+						</div>
+
+						<label for="m_items">[Your products]:</label>
+						<div class="row">
+							<div class="col-md-4 form-group ">
+								<select name="items" id="m_items" class="dr_itemToPack" multiple
+									size="4">
+									<option value="item1">Item1</option>
+									<option value="item2">Item2</option>
+									<option value="item3">Item3</option>
+									<option value="item3">Item4</option>
+								</select>
+							</div>
+							<div class="col-md-4 form-group ">
+								<button id="btnAddtoPack"
+									class="btn btn-primary btn-lg btn-block">Add to Pack</button>
+							</div>
+
+							<div class="col-md-4 form-group">
+
+								<select name="items" id="m_itemsInAPack" class="dr_itemToPack"
+									multiple size="4">
+									<option value="item1"></option>
+									<option value="item2"></option>
+									<option value="item3"></option>
+									<option value="item3"></option>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label for="packQty">Quantity:</label> <input type="number"
+									id="packQty" class="form-control" required>
+							</div>
+
+							<div class="col-md-6 form-group">
+								<label for="prodPrice">Price:</label> <input type="number"
+									id="prodPrice" class="form-control text-right" required>
+							</div>
+						</div>
+						<div class="row">
+							<label for="chboxProm">Promotion:</label> <input type="checkbox"
+								id="chboxProm" class="checkbox style-2 pull-right"
+								checked="checked" />
+						</div>
+						<div class="row">
+							<div class="col-md-12 form-group">
+								<label for="m_fdescription">Description</label>
+								<textarea class="form-control" id="m_fdescription" cols="40"
+									rows="5"></textarea>
+							</div>
+						</div>
+
+						<!--Submit or reset -->
+						<div class="row">
+							<div class="col-md-3 form-group">
+								<input type="submit" class="btn btn-primary btn-lg btn-block"
+									value="Create">
+							</div>
+							<div class="col-md-3 form-group">
+								<input type="reset" class="btn btn-primary btn-lg btn-block"
+									value="Reset">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><!-- END createPackModal: MODAL FORM -->
+
+<!--Edit Account Info: MODAL FORM  -->
+<div class="modal fade" id="editInfoModal" tabindex="-1" role="dialog" aria-labelledby="editInfoModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-body p-0">
+
+				<div class="col-lg-12 p-5">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<small>CLOSE </small><span aria-hidden="true">&times;</span>
+					</button>
+					<h1 class="mb-4">Edit Account Information</h1>
+					<legend>Farmer</legend>
+					<form asp-controller="" asp-action="#" method="post">
+						<div class="row">
+							<div class="col-md-12 form-group">
+								<label class="" for="m_farmerpicture">Upload your
+									pictures here (PNG, JPG)</label>
+								<!-- *** Need a JS or .Net method to resize pictures -->
+								<input type="file" class="form-control" id="m_farmerpicture"
+									accept="image/png, image/jpeg, image/jpg">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<input type="text" class="form-control" value="Yuliia"
+									placeholder="First Name" id="m_fname" required>
+							</div>
+							<div class="col-md-6 form-group">
+								<input type="text" class="form-control" value="Murziak"
+									placeholder="Last Name" id="m_lname" required>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<input type="text" class="form-control" value=""
+									placeholder="Middle Name" id="m_mname">
+							</div>
+						</div>
+						<!-- Email and Phone -->
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label for="m_email">Email</label> <input type="email"
+									class="form-control" id="m_email" value="murzia4ka@gmail.com"
+									required>
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="m_phone">Phone</label> <input type="text"
+									class="form-control" value="+1(519)-722-7914" id="m_phone">
+							</div>
+						</div>
+						<legend>Specific Information</legend>
+						<div class="row">
+							<div class="col-md-4 form-group">
+								<!-- Build list -->
+								<label for="farmerPosition">Position:</label> <select
+									name="select-farmerPosition" id="farmerPosition"
+									class="form-control" size="2" required>
+									<option value="">Manager</option>
+									<option value="" selected>Administrator</option>
+
+								</select>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12 form-group">
+								<label for="m_website">Web Site URL:</label> <input type="url"
+									class="form-control" id="m_website">
+							</div>
+						</div>
+						<legend>Farm</legend>
+						<div class="row">
+							<div class="col-md-12 form-group">
+								<label class="" for="m_farmpicture">Upload your pictures
+									here (PNG, JPG)</label>
+								<!-- *** Need a JS or .Net method to resize pictures -->
+								<input type="file" class="form-control" id="m_farmpicture"
+									multiple accept="image/png, image/jpeg, image/jpg">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 form-group">
+								<label for="m_fname">Farm Name</label> <input type="text"
+									class="form-control" value="Happy Farm" id="m_fname">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 form-group">
+								<label for="m_fheadline">Head Line</label> <input type="text"
+									class="form-control" id="m_fheadline">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 form-group">
+								<label for="m_fdescription">Description</label>
+								<textarea class="form-control" id="m_fdescription" cols="40"
+									rows="5">Farm farm farm</textarea>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 form-group">
+								<input type="submit" class="btn btn-primary btn-lg btn-block"
+									id="btnSave" value="Save">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div><!-- END Edit Account Info: MODAL FORM  -->

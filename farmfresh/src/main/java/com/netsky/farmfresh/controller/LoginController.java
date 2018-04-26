@@ -1,8 +1,6 @@
 package com.netsky.farmfresh.controller;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -17,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,7 +48,7 @@ public class LoginController extends HttpServlet {
 	protected ModelAndView CreateUser(HttpServletRequest req, HttpServletResponse resp, RedirectAttributes redirectAttributes) 
 			throws ServletException, IOException {
 		
-		ModelAndView mv = new ModelAndView("redirect:/index");
+		ModelAndView mv = new ModelAndView("redirect:/farmers");
 		HttpSession session = req.getSession(true);
 		String desc, pic, position, website, midName, uTypeId;
 		

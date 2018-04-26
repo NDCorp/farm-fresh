@@ -9,8 +9,9 @@
   	if(session.getAttribute("username") != null)
   		userName = (String) session.getAttribute("name");
   	
-  	session.setAttribute("currentuser", userName);
+  	//session.setAttribute("currentuser", userName);
   %>
+  <c:set var="uName" scope="session" value="<%=userName %>"/> 
   
   <div class="container">
     <a class="navbar-brand" href="index.html">
@@ -26,10 +27,12 @@
     <div class="collapse navbar-collapse" id="ftco-nav">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active"><a href="${contextRoot}/index.html" class="nav-link">Home</a></li>
-        <li class="nav-item"><a href="${contextRoot}/farmers.html" class="nav-link">Farmers</a></li>
+        <c:if test="${not empty uName}">
+        	<li class="nav-item"><a href="${contextRoot}/farmers.html" class="nav-link">Farmers</a></li>
+        </c:if>
         <li class="nav-item"><a href="#section-menu" class="nav-link">Produce</a></li>
         <li class="nav-item"><a href="#section-news" class="nav-link">Featured</a></li>
-        <li class="nav-item"><a href="${contextRoot}/contact.html" class="nav-link">Contact</a></li>
+        <!-- <li class="nav-item"><a href="${contextRoot}/contact.html" class="nav-link">Contact</a></li> -->
       </ul>
     </div>
   </div>
@@ -50,9 +53,7 @@
         </form>
       </div>
 
-      <div id="userAccount">
-      	<c:set var="uName" scope="session" value="<%=userName %>"/>    	
-      	  
+      <div id="userAccount">  
 		<c:if test="${not empty uName}">
 			<div class="create-user-left-side"><a href="${contextRoot}/buyers.html"><%=userName %></a></div>
 			<div class="create-user-left-side"><img src="${images}/icon.ico" class="px-1 py-1 w-50" alt="<%=userName %> picture"></div>

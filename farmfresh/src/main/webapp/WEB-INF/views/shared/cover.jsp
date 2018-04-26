@@ -16,7 +16,7 @@
           <a href="#section-home" class="btn btn-outline-white btn-lg ftco-animate">Shop online</a>
         </p>   
         <p class="d-inline-block">
-	        <c:set var="uName" scope="session" value='<%=(String) session.getAttribute("currentuser") %>'/>
+	        <c:set var="uName" scope="session" value='<%=(String) session.getAttribute("username") %>'/>
 			<c:choose>
 				<c:when test="${not empty uName}">
 					<a href="${contextRoot}/logout" class="btn btn-outline-white btn-lg ftco-animate" onclick="FB.logout();">Log out</a>
