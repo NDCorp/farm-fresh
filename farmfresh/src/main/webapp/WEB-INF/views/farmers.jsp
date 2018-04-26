@@ -28,8 +28,13 @@
         </p>
 
         <p class="col-md-4 d-inline-block mx-1">
-          <a href="#" target="_blank" class="btnCreateProduce btn ftco-animate" data-toggle="modal" data-target="#createPackageModal">Create a new Package</a>
-        </p>            
+          <a href="#" target="_blank" class="btnCreateProduce btn ftco-animate" 
+          		data-toggle="modal" data-target="#createPackageModal">Create a new Package</a>
+        </p>   
+        <p class="col-md-3 d-inline-block mx-1">
+			<a href="#" target="_blank" class="btnCreateProduce btn ftco-animate"
+				data-toggle="modal" data-target="#editInfoModal">Edit Information</a>
+		</p>         
       </div>
       <!-- Search -->
       <div id="farmerSearchOfProducts" class="col-md-3 d-inline-block m-1 text-right">
