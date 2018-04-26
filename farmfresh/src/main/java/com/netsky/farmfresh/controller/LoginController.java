@@ -65,11 +65,11 @@ public class LoginController extends HttpServlet {
 				Farm farm = new Farm();
 				farm.setName(req.getParameter("m_ffname"));
 				desc = req.getParameter("m_ffdescription");
-				farm.setDescription((!desc.isEmpty() || desc != null)? desc: null);
+				farm.setDescription((!desc.isEmpty() && desc != null)? desc: null);
 				farm.setHeadLine(req.getParameter("m_ffheadline"));
 				farm.setDateCreated(ToolBox.GetCurrentDate());
 				pic = req.getParameter("m_fpicture");
-				farm.setPicture((!pic.isEmpty() || pic != null)? pic: null);
+				farm.setPicture((!pic.isEmpty() && pic != null)? pic: null);
 				
 				//Create a new farm
 				farmDAO.add(farm);
@@ -91,20 +91,20 @@ public class LoginController extends HttpServlet {
 				farmer.setFirstName(req.getParameter("m_fname"));
 				farmer.setLastName(req.getParameter("m_lname"));
 				midName = req.getParameter("m_mname");
-				farmer.setMiddleName((!midName.isEmpty() || midName != null)? midName: null);
+				farmer.setMiddleName((!midName.isEmpty() && midName != null)? midName: null);
 				farmer.setEmail(req.getParameter("m_email"));
 				farmer.setPhone(req.getParameter("m_phone"));
 				farmer.setPassword(ToolBox.GetMD5(req.getParameter("m_password")));	//!!!! Annotations + Validate password m_password and m_cpassword
 				pic = req.getParameter("m_upicture");
-				farmer.setPicture((!pic.isEmpty() || pic != null)? pic: null);
+				farmer.setPicture((!pic.isEmpty() && pic != null)? pic: null);
 				farmer.setDateCreated(ToolBox.GetCurrentDate());
 				
 				farmer.setFarm(farm);
 				farmer.setFarmerType(fType);
 				position = req.getParameter("m_position");
-				farmer.setPositionName((!position.isEmpty() || position != null)? position: null);
+				farmer.setPositionName((!position.isEmpty() && position != null)? position: null);
 				website = req.getParameter("m_website");
-				farmer.setWebSite((!website.isEmpty() || website != null)? website: null);
+				farmer.setWebSite((!website.isEmpty() && website != null)? website: null);
 				
 				farmerDAO.add(farmer);
 				

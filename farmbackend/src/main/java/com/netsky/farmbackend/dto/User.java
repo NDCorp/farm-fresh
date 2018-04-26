@@ -35,7 +35,8 @@ public abstract class User {
 	private String picture;
 	private Date dateCreated;
 	private Date dateDeleted;
-	private boolean isActif;
+	@Column(name= "isActif")
+	private boolean isActive;
 	
 	public int getId() {
 		return id;
@@ -103,11 +104,11 @@ public abstract class User {
 	public void setDateDeleted(Date dateDeleted) {
 		this.dateDeleted = dateDeleted;
 	}
-	public boolean isActif() {
-		return isActif;
+	public boolean isActive() {
+		return isActive;
 	}
-	public void setActif(boolean isActif) {
-		this.isActif = isActif;
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 

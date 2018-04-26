@@ -24,7 +24,7 @@ public class FarmerDAOImpl implements FarmerDAO{
 	//List of all active farmers
 	public List<Farmer> list() {
 		
-		String selectAllFarmer = "FROM Farmer WHERE IsActive = :active"; 
+		String selectAllFarmer = "FROM Farmer WHERE isActive =:active"; 
 		Query query = sessionFactory.getCurrentSession().createQuery(selectAllFarmer);
 		query.setParameter("active", true);
 		
@@ -79,7 +79,7 @@ public class FarmerDAOImpl implements FarmerDAO{
 
 	@Override
 	public boolean delete(Farmer farmer) {
-		farmer.setActif(false);
+		farmer.setActive(false);
 		try {
 			//Update the farmer to the database table
 			sessionFactory.getCurrentSession().update(farmer);

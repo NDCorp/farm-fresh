@@ -24,7 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.netsky.farmbackend.dao.BuyerDAO;
 import com.netsky.farmbackend.dao.CategoryDAO;
+import com.netsky.farmbackend.dao.ProduceTypeDAO;
 import com.netsky.farmbackend.dao.ProductDAO;
+import com.netsky.farmbackend.dao.ProductionTypeDAO;
 import com.netsky.farmbackend.dao.UserTypeDAO;
 import com.netsky.farmbackend.dto.Buyer;
 import com.netsky.farmbackend.dto.Category;
@@ -39,6 +41,8 @@ public class PageController {
 	
 	@Autowired CategoryDAO categoryDAO;
 	@Autowired ProductDAO productDAO;
+	@Autowired BuyerDAO produceTypeDAO;
+	@Autowired ProductionTypeDAO productionTypeDAO;
 	@Autowired UserTypeDAO userTypeDAO;
 	@Autowired BuyerDAO buyerDAO;
 	
@@ -144,7 +148,7 @@ public class PageController {
 		
 				buyer.setEmail(myResponse.getString("email"));
 				buyer.setDateCreated(ToolBox.GetCurrentDate());
-				buyer.setActif(true);
+				buyer.setActive(true);
 				
 				//Get the userType		
 				UserType uType = new UserType();
@@ -230,6 +234,9 @@ public class PageController {
 		
 		ModelAndView mv = new ModelAndView("page");
 		mv.addObject("title", "Farmers");
+		mv.addObject("categories", categoryDAO.list());
+		mv.addObject("produceTypes", produceTypeDAO.list());
+		mv.addObject("productionTypes", productionTypeDAO.list());
 		mv.addObject("userClickedFarmers", true);
 		return mv;
 	}

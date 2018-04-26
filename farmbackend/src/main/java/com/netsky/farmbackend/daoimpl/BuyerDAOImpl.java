@@ -23,7 +23,7 @@ public class BuyerDAOImpl implements BuyerDAO{
 	//List of all active Buyers
 	public List<Buyer> list() {
 		
-		String selectAllBuyer = "FROM Buyer WHERE IsActive = :active"; 
+		String selectAllBuyer = "FROM Buyer WHERE isActive =:active"; //WHERE IsActive =:active
 		Query query = sessionFactory.getCurrentSession().createQuery(selectAllBuyer);
 		query.setParameter("active", true);
 		
@@ -78,7 +78,7 @@ public class BuyerDAOImpl implements BuyerDAO{
 
 	@Override
 	public boolean delete(Buyer buyer) {
-		buyer.setActif(false);
+		buyer.setActive(false);
 		try {
 			//Update the buyer to the database table
 			sessionFactory.getCurrentSession().update(buyer);

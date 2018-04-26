@@ -137,7 +137,7 @@
                     <div class="col-md-12 form-group">
                         <label for="m_prodpicture">Upload your produce's pictures here (PNG, JPG)</label>
                         <!-- *** Need a JS or .Net method to resize pictures -->
-                        <input type="file" class="form-control" id="m_prodpicture" accept="image/png, image/jpeg, image/jpg" multiple></input>
+                        <input type="file" class="form-control" name="m_prodpicture" id="m_prodpicture" accept="image/png, image/jpeg, image/jpg" multiple></input>
                     </div>
                 </div>		
 
@@ -147,34 +147,33 @@
                   <div class="row">
                     <div class="col-md-6 form-group">
                       <!-- Build list -->
-                      <label for="prodCat">[Load Produce Categories]:</label>
+                      <label for="prodCat">Categories:</label>
                       <select name="select-pcat" id="prodCat" class="form-control" required>
-                        <option value=""></option>
-                        <option value="">Vegetables</option>
-                        <option value="">Fruits</option>
-                        <option value="">Meat</option>
+                        <c:forEach items="${categories}" var="category">
+                        	<option value="${category.id}">${category.name}</option>
+                        </c:forEach>
                       </select>
                     </div>
                 
                     <div class="col-md-6 form-group">
                       <!-- Build list -->
-                      <label for="prodType">[Load Type relative to the Category]:</label>
+                      <label for="prodType">Produce Type:</label>
                       <select name="select-ptype" id="prodType" class="form-control" required>
-                          <option value=""></option>
-                          <option value="">Tomatoes</option>
-                          <option value="">Apples</option>
-                          <option value="">Oranges</option>
-                        </select>
+                          <c:forEach items="${produceTypes}" var="produceType">
+                        	<option value="${produceType.id}">${produceType.name}</option>
+                          </c:forEach>
+                      </select>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12 form-group">
                       <!-- Build list -->
-                      <label for="prodProdType">[Load Produce Production Type]:</label>
+                      <label for="prodProdType">Production Type:</label>
                       <select name="select-pptype" id="prodProdType" class="form-control" >
                           <option value=""></option>
-                          <option value="">OGM</option>
-                          <option value="">Natural</option>
+                          <c:forEach items="${productionTypes}" var="productionType">
+                        	<option value="${productionType.id}">${productionType.name}</option>
+                          </c:forEach>
                         </select>
                     </div>
                   </div>
@@ -185,25 +184,25 @@
                   <legend>Produce</legend>
                   <div class="row">
                     <div class="col-md-12 form-group">
-                      <label for="prodName">Name of a product:</label>
-                      <input type="text" id="prodName" class="form-control" required>
+                      <label for="prodName">Name:</label>
+                      <input type="text" name="prodName" id="prodName" class="form-control" required>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6 form-group">
                       <label for="prodQty">Quantity:</label>
-                      <input type="number" id="prodQty" class="form-control" required>
+                      <input type="number" name="prodQty" id="prodQty" class="form-control" required>
                     </div>
                   
                     <div class="col-md-6 form-group">
                       <label for="prodPrice">Price:</label>
-                      <input type="number" id="prodPrice" class="form-control text-right" required>
+                      <input type="number" name="prodPrice" id="prodPrice" class="form-control text-right" required>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12 form-group">
                       <label for="m_fproddesc">Description</label>
-                      <textarea class="form-control" id="m_fproddesc" cols="40" rows="4"></textarea>
+                      <textarea class="form-control" name="m_fproddesc" id="m_fproddesc" cols="40" rows="4"></textarea>
                     </div>
                   </div>
                 </fieldset>

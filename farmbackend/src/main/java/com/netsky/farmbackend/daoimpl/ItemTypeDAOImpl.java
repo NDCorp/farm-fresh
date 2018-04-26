@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.netsky.farmbackend.dao.ItemTypeDAO;
 import com.netsky.farmbackend.dto.ItemType;
+import com.netsky.farmbackend.dto.UserType;
 
 @Repository("ItemTypeDAO")
 @Transactional
@@ -29,6 +30,15 @@ public class ItemTypeDAOImpl implements ItemTypeDAO{
 		return sessionFactory.getCurrentSession().get(ItemType.class, Integer.valueOf(id));
 	}
 
+	//Retrieve a ItemType based on its acronym 
+	@Override
+	public ItemType getByAcronym(char acronym) {
+		Query query = sessionFactory.getCurrentSession().createQuery("FROM ItemType WHERE Acronym =:acronym "); 
+		query.setParameter("acronym", acronym);
+		
+		return (ItemType) query.getSingleResult();
+	}
+		
 	@Override
 	public boolean add(ItemType itemType) {
 		try {

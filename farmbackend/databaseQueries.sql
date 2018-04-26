@@ -96,10 +96,10 @@ CREATE TABLE Items (
   FarmersID    int(10) NOT NULL, 
   PromotionsID int(10), 
   ItemTypesID  int(10) NOT NULL, 
-  Name         varchar(50), 
+  Name         varchar(50) NOT NULL, 
   Description  varchar(1000), 
   Quantities   decimal(10, 2) DEFAULT 0 NOT NULL, 
-  Price        decimal(8, 2), 
+  Price        decimal(8, 2) NOT NULL, 
   IsActive     bit(1) DEFAULT 1 NOT NULL, 
   DateCreated  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
   DateDeleted  timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
@@ -238,7 +238,7 @@ CREATE TABLE Users (
   Picture     varchar(30) DEFAULT 'default.png', 
   DateCreated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
   DateDeleted timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
-  IsActif     bit(1) DEFAULT 1 NOT NULL, 
+  IsActive     bit(1) DEFAULT 1 NOT NULL, 
   PRIMARY KEY (ID));
   
 CREATE TABLE UserTypes (
@@ -383,6 +383,11 @@ INSERT INTO ProduceTypes (CategoriesID, Name, Description) VALUES ((SELECT ID FR
 
 SELECT * FROM ProduceTypes;
 
+insert into productiontypes(Name, Description) values('OGM', 'OGM');
+insert into productiontypes(Name, Description) values('Natural', 'Natural');
+
+SELECT * FROM productiontypes;
+
 INSERT INTO Status (Code, Description) VALUES ('A', 'Accepted: The order notification is sent to a farmer');
 INSERT INTO Status (Code, Description) VALUES ('P', 'Pending: The farmer checks product aviability');
 INSERT INTO Status (Code, Description) VALUES ('I', 'In process or Delivering: The product is sent');
@@ -391,6 +396,6 @@ INSERT INTO Status (Code, Description) VALUES ('C', 'Closed: The product is deli
 
 SELECT * FROM Status;
 
-INSERT INTO users (UserTypesID,FirstName, LastName,MiddleName, email, Phone,Password,Picture, DateCreated, DateDeleted, IsActif) 
+INSERT INTO users (UserTypesID,FirstName, LastName,MiddleName, email, Phone,Password,Picture, DateCreated, DateDeleted, IsActive) 
 values (2, 'John', 'Doe', null, 'john.doe@test.ca', null, md5('12345'), null, '2018-04-11', null, 1);
 
