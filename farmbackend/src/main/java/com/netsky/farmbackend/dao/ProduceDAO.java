@@ -2,11 +2,14 @@ package com.netsky.farmbackend.dao;
 
 import java.util.List;
 
+import com.netsky.farmbackend.dto.Farmer;
 import com.netsky.farmbackend.dto.Produce;
 
 public interface ProduceDAO {
 	public List<Produce> list();
 
+	public List<Produce> listFarmerProduce(Farmer farmer);
+	
 	public Produce get(int produce);
 
 	public boolean add(Produce produce);

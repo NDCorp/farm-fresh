@@ -175,7 +175,7 @@ public class LoginController extends HttpServlet {
 				else	//User found, password valid
 				{
 					mv = new ModelAndView("redirect:/farmers");
-					redirectAttributes.addFlashAttribute("message", farmer.getEmail() + " connected");
+					//redirectAttributes.addFlashAttribute("message", farmer.getEmail() + " connected");
 					
 					//** Save session user variables. set session to expire in 2 min = 120sec
 					session.setAttribute("username", farmer.getEmail());

@@ -24,15 +24,22 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.netsky.farmbackend.dao.BuyerDAO;
 import com.netsky.farmbackend.dao.CategoryDAO;
+import com.netsky.farmbackend.dao.FarmerDAO;
+import com.netsky.farmbackend.dao.PictureDAO;
+import com.netsky.farmbackend.dao.ProduceDAO;
 import com.netsky.farmbackend.dao.ProduceTypeDAO;
 import com.netsky.farmbackend.dao.ProductDAO;
 import com.netsky.farmbackend.dao.ProductionTypeDAO;
 import com.netsky.farmbackend.dao.UserTypeDAO;
 import com.netsky.farmbackend.dto.Buyer;
 import com.netsky.farmbackend.dto.Category;
+import com.netsky.farmbackend.dto.Farmer;
+import com.netsky.farmbackend.dto.Produce;
 import com.netsky.farmbackend.dto.UserType;
 import com.netsky.farmfresh.exception.ProductNotFoundException;
 import com.netsky.farmfresh.tools.controller.ToolBox;
+
+import antlr.collections.List;
 
 @Controller
 public class PageController {
@@ -41,10 +48,13 @@ public class PageController {
 	
 	@Autowired CategoryDAO categoryDAO;
 	@Autowired ProductDAO productDAO;
-	@Autowired BuyerDAO produceTypeDAO;
+	@Autowired ProduceDAO produceDAO;
+	@Autowired PictureDAO pictureDAO;
+	@Autowired ProduceTypeDAO produceTypeDAO;
 	@Autowired ProductionTypeDAO productionTypeDAO;
 	@Autowired UserTypeDAO userTypeDAO;
 	@Autowired BuyerDAO buyerDAO;
+	@Autowired FarmerDAO farmerDAO;
 	
 	@RequestMapping(value = {"/", "/home", "/index"})	//, method = RequestMethod.GET
 	public ModelAndView index(HttpServletRequest req, HttpServletResponse resp) 
@@ -230,13 +240,25 @@ public class PageController {
 	 * Methods to load all farmers
 	 * */
 	@RequestMapping(value = "/farmers")
-	public ModelAndView farmers() {
+	public ModelAndView farmers(HttpServletRequest req, HttpServletResponse resp) {
+		//Get the session and manage the user connected with oAuth fb 
+		HttpSession session = req.getSession(true);
 		
 		ModelAndView mv = new ModelAndView("page");
+		
 		mv.addObject("title", "Farmers");
 		mv.addObject("categories", categoryDAO.list());
 		mv.addObject("produceTypes", produceTypeDAO.list());
 		mv.addObject("productionTypes", productionTypeDAO.list());
+		
+		//get farmer's produce
+		Farmer farmer = new Farmer();
+		farmer = farmerDAO.getFarmerByEmail(session.getAttribute("username").toString());
+		//get produce pictures
+		//List<Produce> produce =  produceDAO.listFarmerProduce(farmer);
+		
+		mv.addObject("produce", produceDAO.listFarmerProduce(farmer));
+		//mv.addObject("picture", pictureDAO.list());
 		mv.addObject("userClickedFarmers", true);
 		return mv;
 	}

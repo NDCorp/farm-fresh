@@ -1,11 +1,24 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <!-- Julia's and Joseph's work. -->
 <section class="ftco-section" id="section-gallery">
+	<div>${requestScope.message}</div>
+	
   <!--CreateProduce & CreatePackage buttons-->		  
   <div class="container">
     <div class="row ftco-custom-gutters mb-4">
       <div class="col-md-12">
-        <p id="lnkMyProducts" class="col-md-6 d-inline-block"><a href="farmers.html">My Produce</a></p> 
+        <p id="lnkMyProducts" class="col-md-6 d-inline-block">
+        	<a href="farmers.html">
+	        	<c:if test="${not empty uName}">
+	        		${uName} Produce
+	        	</c:if>
+	        	<c:if test="${empty uName}">
+	        		Produce
+	        	</c:if>
+        	</a>
+        </p> 
       
         <div class="dropdown col-md-5 d-inline-block text-right">
           <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sort By
@@ -48,71 +61,80 @@
     <div class="row ftco-custom-gutters mx-2">     
       <!-- Add Div: data-ng-controller="" action="ManageProduct" -->
       <div class="col-md-12 text-center">
-      <div class="col-md-3 mx-1 my-4 d-inline-block product">	
-        <img class="mx-1 my-3 productPhoto" src="${images}/menu_1.jpg" alt="[ALT_PRODUCE_PIC]">		
-        <hr class="line"/>
-        <div class="productForm">
-          <h3>
-            Apple Green
-            <span class="d-block my-2">$ 22.5</span>
-          </h3>
-          <p class="px-1 py-3">Yet bed any for travelling assistance indulgence unpleasing. 
-            Not thoughts all exercise blessing. Indulgence way everything
-            joy alteration boisterous the attachment. Party we years to order 
-            allow asked of.
-          </p>			
-  
-          <div class="mx-1 my-3">
-            <a href="#editProduct" >Edit Product</a> || 
-            <a href="#deleteProduct">Delete Product</a>  
-          </div>
-
-        </div>
-      </div><!-- END Procude 1 -->
-
-      <div class="col-md-3 mx-1 my-4 d-inline-block product">	
-        <img class="mx-1 my-3 productPhoto" src="${images}/menu_1.jpg" alt="[ALT_PRODUCE_PIC]">		
-        <hr class="line"/>
-        <div class="productForm">
-          <h3>
-            Apple Green
-            <span class="d-block my-2">$ 22.5</span>
-          </h3>
-          <p class="px-1 py-3">Yet bed any for travelling assistance indulgence unpleasing. 
-            Not thoughts all exercise blessing. Indulgence way everything
-            joy alteration boisterous the attachment. Party we years to order 
-            allow asked of.
-          </p>			
-  
-          <div class="mx-1 my-3">
-            <a href="#editProduct" >Edit Product</a> || 
-            <a href="#deleteProduct">Delete Product</a>  
-          </div>
-
-        </div>
-      </div><!-- END Procude 2 -->
-
-      <div class="col-md-3 mx-1 my-4 d-inline-block product">	
-          <img class="mx-1 my-3 productPhoto" src="${images}/menu_1.jpg" alt="[ALT_PRODUCE_PIC]">		
-          <hr class="line"/>
-          <div class="productForm">
-            <h3>
-              Apple Green
-              <span class="d-block my-2">$ 22.5</span>
-            </h3>
-            <p class="px-1 py-3">Yet bed any for travelling assistance indulgence unpleasing. 
-              Not thoughts all exercise blessing. Indulgence way everything
-              joy alteration boisterous the attachment. Party we years to order 
-              allow asked of.
-            </p>			
-    
-            <div class="mx-1 my-3">
-              <a href="#editProduct" >Edit Product</a> || 
-              <a href="#deleteProduct">Delete Product</a>  
-            </div>
-
-          </div>
-        </div><!-- END Procude 3 -->
+      
+	      <c:forEach items="${produces}" var="produce">
+		      <div class="col-md-3 mx-1 my-4 d-inline-block product">	
+		        <img class="mx-1 my-3 productPhoto" src="${images}/menu_1.jpg" alt="[ALT_PRODUCE_PIC]">		
+		        <!--
+		        <c:forEach items="${pictures}" var="picture">
+		        	<c:if test="${produce.id} == ${picture.item}">
+				         <img class="mx-1 my-3 productPhoto" src="${images}/${picture.picture}" alt="${picture.alternateTextId}">		
+				         
+			         </c:if>
+		        </c:forEach>
+		        -->
+		        <hr class="line"/>
+		        <div class="productForm">
+		          <h3>
+		            ${produce.name}
+		            <span class="d-block my-2"> ${produce.unitPrice}</span>
+		          </h3>
+		          <p class="px-1 py-3">
+		          	${produce.description}
+		          </p>			
+		  
+		          <div class="mx-1 my-3">
+		            <a href="#editProduct" >Edit Product</a> || 
+		            <a href="#deleteProduct">Delete Product</a>  
+		          </div>
+		
+		        </div>
+		      </div><!-- END Procude 1 -->
+		  </c:forEach>
+		  
+	      <div class="col-md-3 mx-1 my-4 d-inline-block product">	
+	        <img class="mx-1 my-3 productPhoto" src="${images}/menu_1.jpg" alt="[ALT_PRODUCE_PIC]">		
+	        <hr class="line"/>
+	        <div class="productForm">
+	          <h3>
+	            Apple Green
+	            <span class="d-block my-2">$ 22.5</span>
+	          </h3>
+	          <p class="px-1 py-3">Yet bed any for travelling assistance indulgence unpleasing. 
+	            Not thoughts all exercise blessing. Indulgence way everything
+	            joy alteration boisterous the attachment. Party we years to order 
+	            allow asked of.
+	          </p>			
+	  
+	          <div class="mx-1 my-3">
+	            <a href="#editProduct" >Edit Product</a> || 
+	            <a href="#deleteProduct">Delete Product</a>  
+	          </div>
+	
+	        </div>
+	      </div><!-- END Procude 2 -->
+	
+	      <div class="col-md-3 mx-1 my-4 d-inline-block product">	
+	          <img class="mx-1 my-3 productPhoto" src="${images}/menu_1.jpg" alt="[ALT_PRODUCE_PIC]">		
+	          <hr class="line"/>
+	          <div class="productForm">
+	            <h3>
+	              Apple Green
+	              <span class="d-block my-2">$ 22.5</span>
+	            </h3>
+	            <p class="px-1 py-3">Yet bed any for travelling assistance indulgence unpleasing. 
+	              Not thoughts all exercise blessing. Indulgence way everything
+	              joy alteration boisterous the attachment. Party we years to order 
+	              allow asked of.
+	            </p>			
+	    
+	            <div class="mx-1 my-3">
+	              <a href="#editProduct" >Edit Product</a> || 
+	              <a href="#deleteProduct">Delete Product</a>  
+	            </div>
+	
+	          </div>
+	        </div><!-- END Procude 3 -->
       </div>
     </div>
   </div>
@@ -132,7 +154,7 @@
               <small>CLOSE </small><span aria-hidden="true">&times;</span>
             </button>
             <h1 class="mb-4">Create a new Produce</h1>  
-            <form id="CreateProduceForm" action="createproduce" method="post">                 
+            <form id="CreateProduceForm" action="createproduce" method="post" enctype="multipart/form-data">                 
                 <div class="row">
                     <div class="col-md-12 form-group">
                         <label for="m_prodpicture">Upload your produce's pictures here (PNG, JPG)</label>
@@ -149,6 +171,7 @@
                       <!-- Build list -->
                       <label for="prodCat">Categories:</label>
                       <select name="select-pcat" id="prodCat" class="form-control" required>
+                      	<option value=""></option>
                         <c:forEach items="${categories}" var="category">
                         	<option value="${category.id}">${category.name}</option>
                         </c:forEach>
@@ -159,6 +182,7 @@
                       <!-- Build list -->
                       <label for="prodType">Produce Type:</label>
                       <select name="select-ptype" id="prodType" class="form-control" required>
+                      	  <option value=""></option>
                           <c:forEach items="${produceTypes}" var="produceType">
                         	<option value="${produceType.id}">${produceType.name}</option>
                           </c:forEach>
@@ -191,12 +215,12 @@
                   <div class="row">
                     <div class="col-md-6 form-group">
                       <label for="prodQty">Quantity:</label>
-                      <input type="number" name="prodQty" id="prodQty" class="form-control" required>
+                      <input type="number" step="0.01" name="prodQty" id="prodQty" class="form-control" required>
                     </div>
                   
                     <div class="col-md-6 form-group">
                       <label for="prodPrice">Price:</label>
-                      <input type="number" name="prodPrice" id="prodPrice" class="form-control text-right" required>
+                      <input type="number" step="0.01" name="prodPrice" id="prodPrice" class="form-control text-right" required>
                     </div>
                   </div>
                   <div class="row">

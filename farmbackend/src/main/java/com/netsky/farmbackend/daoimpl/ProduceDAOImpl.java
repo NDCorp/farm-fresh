@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.netsky.farmbackend.dao.ProduceDAO;
+import com.netsky.farmbackend.dto.Farmer;
 import com.netsky.farmbackend.dto.Produce;
 
 @Repository("ProduceDAO")
@@ -19,13 +20,24 @@ public class ProduceDAOImpl implements ProduceDAO{
 	//List of all active produce
 	public List<Produce> list() {
 		
-		String selectAllProduce = "FROM Produce WHERE IsActive = :active"; 
+		String selectAllProduce = "FROM Produce WHERE IsActive =:active"; 
 		Query query = sessionFactory.getCurrentSession().createQuery(selectAllProduce);
 		query.setParameter("active", true);
 		
 		return query.getResultList();
 	}
 
+	//List of all active produce for a farmer
+	public List<Produce> listFarmerProduce(Farmer farmer) {
+		
+		String selectAllProduce = "FROM Produce WHERE IsActive =:active AND Farmer =:farmer"; 
+		Query query = sessionFactory.getCurrentSession().createQuery(selectAllProduce);
+		query.setParameter("active", true);
+		query.setParameter("farmer", farmer);
+		
+		return query.getResultList();
+	}
+	
 	//Retrieve a Produce based on its ID 
 	@Override
 	public Produce get(int id) {
