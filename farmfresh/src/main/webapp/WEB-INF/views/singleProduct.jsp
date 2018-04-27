@@ -2,13 +2,13 @@
 
 	<!-- Breadcrumb -->
 	<div class="row">
-		<div class="col-xs-12">
+		<%-- <div class="col-xs-12">
 			<ol class="breadcrumb">
 				<li><a href="${contextRoot}/home">Home</a></li>&nbsp;|&nbsp;
 				<li><a href="${contextRoot}/show/all/products">Products</a></li>&nbsp;|&nbsp; 
 				<li class="active">${product.name}</li>
 			</ol>
-		</div>
+		</div> --%>
 	</div>
 
 	<div class="row">

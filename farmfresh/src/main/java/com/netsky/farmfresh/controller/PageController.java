@@ -35,6 +35,7 @@ import com.netsky.farmbackend.dto.Buyer;
 import com.netsky.farmbackend.dto.Category;
 import com.netsky.farmbackend.dto.Farmer;
 import com.netsky.farmbackend.dto.Produce;
+import com.netsky.farmbackend.dto.Product;
 import com.netsky.farmbackend.dto.UserType;
 import com.netsky.farmfresh.exception.ProductNotFoundException;
 import com.netsky.farmfresh.tools.controller.ToolBox;
@@ -55,6 +56,7 @@ public class PageController {
 	@Autowired UserTypeDAO userTypeDAO;
 	@Autowired BuyerDAO buyerDAO;
 	@Autowired FarmerDAO farmerDAO;
+	@Autowired ProductDAO productDao;
 	
 	@RequestMapping(value = {"/", "/home", "/index"})	//, method = RequestMethod.GET
 	public ModelAndView index(HttpServletRequest req, HttpServletResponse resp) 
@@ -100,6 +102,7 @@ public class PageController {
 		
 		//passing the list of category
 		mv.addObject("categories", categoryDAO.list());
+		mv.addObject("products",  productDao.listActiveProducts());
 		mv.addObject("userClickedHome", true);
 		return mv;
 	}	
@@ -316,6 +319,7 @@ public class PageController {
 		
 		//passing the list of category
 		mv.addObject("categories", categoryDAO.list());
+		mv.addObject("products",  productDao.listActiveProducts());
 		mv.addObject("userClickedAllProducts", true);
 		return mv;
 	}
@@ -336,6 +340,7 @@ public class PageController {
 		
 		//passing the single category
 		mv.addObject("category", category);
+		mv.addObject("products", productDao.listActiveProductsByCategory(id));
 		
 		mv.addObject("userClickedCategoryProducts", true);
 		return mv;
@@ -344,7 +349,7 @@ public class PageController {
 	/*
 	 * Viewing a single product
 	 * */
-	/*
+	
 	@RequestMapping(value = "/show/{id}/product")
 	public ModelAndView showSingleProduct(@PathVariable int id) throws ProductNotFoundException {
 		ModelAndView mv = new ModelAndView("page");
@@ -364,6 +369,6 @@ public class PageController {
 				
 		return mv;
 	}
-	*/
+	
 	
 }

@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.netsky.farmbackend.dao.ProductDAO;
 import com.netsky.farmbackend.dto.Product;
 
-//Items DAO
+
 @Repository("productDAO")
 @Transactional
 public class ProductDAOImpl implements ProductDAO {
@@ -77,7 +77,7 @@ public class ProductDAOImpl implements ProductDAO {
 
 	@Override
 	public List<Product> listActiveProducts() {
-		String selectActiveProducts = "FROM Items WHERE IsActive = :active";
+		String selectActiveProducts = "FROM Product WHERE active = :active";
 		return sessionfactory
 				.getCurrentSession()
 					.createQuery(selectActiveProducts, Product.class)
@@ -85,7 +85,7 @@ public class ProductDAOImpl implements ProductDAO {
 							.getResultList();
 	}
 
-	/*
+	
 	@Override
 	public List<Product> listActiveProductsByCategory(int categoryId) {
 		String selectActiveProductsByCategory = "FROM Product WHERE active = :active AND categoryId = :categoryId";
@@ -96,7 +96,7 @@ public class ProductDAOImpl implements ProductDAO {
 						.setParameter("categoryId", categoryId)
 							.getResultList();
 	}
-	*/
+	
 	
 	@Override
 	public List<Product> getLatestActiveProducts(int counts) {
