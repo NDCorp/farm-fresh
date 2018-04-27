@@ -62,22 +62,24 @@
       <!-- Add Div: data-ng-controller="" action="ManageProduct" -->
       <div class="col-md-12 text-center">
       
+      	  <c:if test="${empty produces}">
+      	  	<h4>You don't have any produce in the system. Please create some produce.</h4>
+      	  </c:if>
+      	  
 	      <c:forEach items="${produces}" var="produce">
 		      <div class="col-md-3 mx-1 my-4 d-inline-block product">	
-		        <img class="mx-1 my-3 productPhoto" src="${images}/menu_1.jpg" alt="[ALT_PRODUCE_PIC]">		
-		        <!--
+		         <img class="mx-1 my-3 productPhoto" src="${images}/menu_1.jpg" alt="[ALT_PRODUCE_PIC]">		
+		         <!--
 		        <c:forEach items="${pictures}" var="picture">
-		        	<c:if test="${produce.id} == ${picture.item}">
-				         <img class="mx-1 my-3 productPhoto" src="${images}/${picture.picture}" alt="${picture.alternateTextId}">		
-				         
-			         </c:if>
+		        	<img class="mx-1 my-3 productPhoto" src="${pictPathDir}/${picture.picture}" alt="${picture.alternateText}">	
+		        	
 		        </c:forEach>
 		        -->
 		        <hr class="line"/>
 		        <div class="productForm">
 		          <h3>
 		            ${produce.name}
-		            <span class="d-block my-2"> ${produce.unitPrice}</span>
+		            <span class="d-block my-2">$ ${produce.unitPrice}</span>
 		          </h3>
 		          <p class="px-1 py-3">
 		          	${produce.description}
@@ -92,49 +94,7 @@
 		      </div><!-- END Procude 1 -->
 		  </c:forEach>
 		  
-	      <div class="col-md-3 mx-1 my-4 d-inline-block product">	
-	        <img class="mx-1 my-3 productPhoto" src="${images}/menu_1.jpg" alt="[ALT_PRODUCE_PIC]">		
-	        <hr class="line"/>
-	        <div class="productForm">
-	          <h3>
-	            Apple Green
-	            <span class="d-block my-2">$ 22.5</span>
-	          </h3>
-	          <p class="px-1 py-3">Yet bed any for travelling assistance indulgence unpleasing. 
-	            Not thoughts all exercise blessing. Indulgence way everything
-	            joy alteration boisterous the attachment. Party we years to order 
-	            allow asked of.
-	          </p>			
-	  
-	          <div class="mx-1 my-3">
-	            <a href="#editProduct" >Edit Product</a> || 
-	            <a href="#deleteProduct">Delete Product</a>  
-	          </div>
-	
-	        </div>
-	      </div><!-- END Procude 2 -->
-	
-	      <div class="col-md-3 mx-1 my-4 d-inline-block product">	
-	          <img class="mx-1 my-3 productPhoto" src="${images}/menu_1.jpg" alt="[ALT_PRODUCE_PIC]">		
-	          <hr class="line"/>
-	          <div class="productForm">
-	            <h3>
-	              Apple Green
-	              <span class="d-block my-2">$ 22.5</span>
-	            </h3>
-	            <p class="px-1 py-3">Yet bed any for travelling assistance indulgence unpleasing. 
-	              Not thoughts all exercise blessing. Indulgence way everything
-	              joy alteration boisterous the attachment. Party we years to order 
-	              allow asked of.
-	            </p>			
-	    
-	            <div class="mx-1 my-3">
-	              <a href="#editProduct" >Edit Product</a> || 
-	              <a href="#deleteProduct">Delete Product</a>  
-	            </div>
-	
-	          </div>
-	        </div><!-- END Procude 3 -->
+	      
       </div>
     </div>
   </div>

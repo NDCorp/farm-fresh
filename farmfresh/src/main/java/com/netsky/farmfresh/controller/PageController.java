@@ -1,11 +1,16 @@
 package com.netsky.farmfresh.controller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +39,7 @@ import com.netsky.farmbackend.dao.UserTypeDAO;
 import com.netsky.farmbackend.dto.Buyer;
 import com.netsky.farmbackend.dto.Category;
 import com.netsky.farmbackend.dto.Farmer;
+import com.netsky.farmbackend.dto.Picture;
 import com.netsky.farmbackend.dto.Produce;
 import com.netsky.farmbackend.dto.UserType;
 import com.netsky.farmfresh.exception.ProductNotFoundException;
@@ -55,6 +61,7 @@ public class PageController {
 	@Autowired UserTypeDAO userTypeDAO;
 	@Autowired BuyerDAO buyerDAO;
 	@Autowired FarmerDAO farmerDAO;
+	@Autowired ServletContext context;
 	
 	@RequestMapping(value = {"/", "/home", "/index"})	//, method = RequestMethod.GET
 	public ModelAndView index(HttpServletRequest req, HttpServletResponse resp) 
@@ -237,12 +244,16 @@ public class PageController {
 	}
 	
 	/*
-	 * Methods to load all farmers
+	 * Methods to load farmer account
 	 * */
 	@RequestMapping(value = "/farmers")
 	public ModelAndView farmers(HttpServletRequest req, HttpServletResponse resp) {
 		//Get the session and manage the user connected with oAuth fb 
 		HttpSession session = req.getSession(true);
+		
+		//Redirect to index if not connected
+		if (session.getAttribute("username") == null)
+			new ModelAndView("redirect:/index");
 		
 		ModelAndView mv = new ModelAndView("page");
 		
@@ -254,11 +265,29 @@ public class PageController {
 		//get farmer's produce
 		Farmer farmer = new Farmer();
 		farmer = farmerDAO.getFarmerByEmail(session.getAttribute("username").toString());
-		//get produce pictures
-		//List<Produce> produce =  produceDAO.listFarmerProduce(farmer);
 		
-		mv.addObject("produce", produceDAO.listFarmerProduce(farmer));
-		//mv.addObject("picture", pictureDAO.list());
+		//get produce list for this farmer
+		java.util.List<Produce> prodList = new ArrayList<Produce>();
+		prodList = produceDAO.listFarmerProduce(farmer.getId());
+		mv.addObject("produces", prodList);
+		
+		//get produce ids for this farmer
+		Set<Integer> prodIds = new HashSet<Integer>();
+		for (Produce prod : prodList) {
+			prodIds.add(prod.getId());
+		}
+		
+		//get pictures for all farmer's produce
+		mv.addObject("pictures", pictureDAO.listFarmerProdPicture(prodIds));
+		
+		//Get repository
+		String userFolder = "user_" + farmer.getId();
+		String pictPathDir = context.getContextPath(); //getRealPath("\\src\\main\\webapp\\assets\\images")
+		pictPathDir += File.separator + "images" + File.separator
+    					+ "upload"+ File.separator + userFolder;
+
+    	mv.addObject("pictPathDir", pictPathDir);
+    	
 		mv.addObject("userClickedFarmers", true);
 		return mv;
 	}

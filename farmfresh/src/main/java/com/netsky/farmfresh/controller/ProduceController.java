@@ -4,8 +4,13 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -30,6 +35,7 @@ import com.netsky.farmbackend.dao.CategoryDAO;
 import com.netsky.farmbackend.dao.FarmerDAO;
 import com.netsky.farmbackend.dao.ItemTypeDAO;
 import com.netsky.farmbackend.dao.PackDAO;
+import com.netsky.farmbackend.dao.PictureDAO;
 import com.netsky.farmbackend.dao.ProduceDAO;
 import com.netsky.farmbackend.dao.ProduceTypeDAO;
 import com.netsky.farmbackend.dao.ProductionTypeDAO;
@@ -52,10 +58,11 @@ import antlr.collections.List;
 public class ProduceController extends HttpServlet {
 
 	public static final long serialVersionUID = 1L;
-	private static final String DATA_DIRECTORY = "data";
+	//private static final String DATA_DIRECTORY = "data";
     private static final int MAX_MEMORY_SIZE = 80 * 80 * 80;
     private static final int MAX_REQUEST_SIZE = 256 * 256;
-	
+    private static final String UPLOAD_DIR = "upload";
+    
 	@Autowired ProduceDAO produceDAO;
 	@Autowired PackDAO packDAO;
 	@Autowired FarmerDAO farmerDAO;
@@ -63,6 +70,8 @@ public class ProduceController extends HttpServlet {
 	@Autowired ProductionTypeDAO productionTypeDAO;
 	@Autowired CategoryDAO categoryDAO;
 	@Autowired ProduceTypeDAO produceTypeDAO;
+	@Autowired ServletContext context;
+	@Autowired PictureDAO pictureDAO;
 	
 	//*** Create a new produce
 	@RequestMapping(value = "/createproduce", method= RequestMethod.POST)
@@ -74,11 +83,7 @@ public class ProduceController extends HttpServlet {
 		String desc, pic, userFolder, fieldName, fieldValue;
 		
 		try
-		{
-			// Save file on system
-		      
-			
-			
+		{			
 			//Check if the request exists 
 	        boolean isMultipart = ServletFileUpload.isMultipartContent(req);
 	        if (!isMultipart) 
@@ -93,11 +98,11 @@ public class ProduceController extends HttpServlet {
 				Farmer farmer = new Farmer();
 				farmer = farmerDAO.getFarmerByEmail(session.getAttribute("username").toString());	            				
     			
-				//Get the userid
-				userFolder = "user_" + farmer.getId();
+				
 				//call the method to upload pictures
-				UploadPicture fileInput = new UploadPicture();
-				fileInput.GetPicture(req, resp, userFolder);
+				//UploadPicture fileInput = new UploadPicture();
+				//HttpServletRequest tempReq = req;
+				//fileInput.GetPicture(tempReq, resp, userFolder);
 				
 				//*** 2. Create item type
 				ItemType itemType = new ItemType();
@@ -119,8 +124,10 @@ public class ProduceController extends HttpServlet {
 				Produce p = new Produce();
 				
 				//*** 8. Upload picture
-				Picture picture = new Picture();
-				
+				//Get the user folder name
+				userFolder = "user_" + farmer.getId();
+				java.util.List<Picture> picList = new ArrayList<Picture>();
+								
 		        // Create a factory
 		        DiskFileItemFactory factory = new DiskFileItemFactory();
 	
@@ -174,21 +181,32 @@ public class ProduceController extends HttpServlet {
 								break;
 							case ("prodPrice"):
 								p.setUnitPrice(Double.parseDouble(fieldValue));
-								break;	  
-							case ("m_prodpicture"):
-								//loop for all pictures
-								picture.setPicture((!fieldValue.isEmpty() && fieldValue != null)? fieldValue: null);
-								picture.setAlternateTextId("Produce " + fieldValue);
 								break;	
 	                	}
 	                }
 	                else if (!item.isFormField())
 	                {
+	                	//Get directory
+	                	String uploadPathDir = context.getContextPath(); //getRealPath("\\src\\main\\webapp\\assets\\images")
+	                	uploadPathDir += File.separator + "images" + File.separator + UPLOAD_DIR + File.separator + userFolder;
+    	
+	                	//Create the user folder under upload is it doesn't exist yet
+	                    Path path = Paths.get(uploadPathDir);
+	                    if (!Files.exists(path))
+	                    	Files.createDirectories(path);
+	                    
+	                    //get filename
 	                	fieldValue = item.getName();
 	                	
-	                	//loop for all pictures
+	                	File uploadedFile = new File(path + File.separator + fieldValue);
+	                    item.write(uploadedFile);
+	                    
+	                	//Put all picture object in list
+	                    Picture picture = new Picture();
+	                    
 						picture.setPicture((!fieldValue.isEmpty() && fieldValue != null)? fieldValue: null);
-						picture.setAlternateTextId("Produce " + fieldValue);
+						picture.setAlternateText("Produce " + fieldValue);
+						picList.add(picture);
 	                }
 	            }
 
@@ -203,13 +221,15 @@ public class ProduceController extends HttpServlet {
 				p.setProduceType(produceType);		
 				
 				produceDAO.add(p);
-				redirectAttributes.addFlashAttribute("message", "Produce " + p.getName() + " created.");
-				
+
 				//*** Set Value for Picture
-				picture.setItem(p);
-			
+				//Picture picture = new Picture();
+				for (Picture picture : picList) {
+					picture.setItem(p);
+					pictureDAO.add(picture);
+				} 
 				
-	
+				redirectAttributes.addFlashAttribute("message", "Produce " + p.getName() + " created.");				
 			}
 			
 			return mv;

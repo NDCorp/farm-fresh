@@ -17,7 +17,7 @@ public class Picture {
 	@ManyToOne
 	@JoinColumn(name="itemsId", referencedColumnName="id")
 	private Item item;
-	private String alternateTextId;
+	private String alternateText;
 	private String picture;
 	
 	public int getId() {
@@ -31,12 +31,12 @@ public class Picture {
 	}
 	public void setItem(Item item) {
 		this.item = item;
+	}	
+	public String getAlternateText() {
+		return alternateText;
 	}
-	public String getAlternateTextId() {
-		return alternateTextId;
-	}
-	public void setAlternateTextId(String alternateTextId) {
-		this.alternateTextId = alternateTextId;
+	public void setAlternateText(String alternateText) {
+		this.alternateText = alternateText;
 	}
 	public String getPicture() {
 		return picture;

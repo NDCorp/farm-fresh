@@ -108,20 +108,20 @@ public class LoginController extends HttpServlet {
 				
 				farmerDAO.add(farmer);
 				
-				//** Save session user variables. set session to expire in 2 min = 120sec
+				//** Save session user variables. set session to expire in 15 min = 900sec
 				session.setAttribute("username", farmer.getEmail());
 				session.setAttribute("pass", farmer.getPassword());
 				session.setAttribute("name", farmer.getFirstName() + " " + farmer.getLastName());
-				session.setMaxInactiveInterval(120);
+				session.setMaxInactiveInterval(900);
 				
-				//** Save cookie user variables. set cookie to expire in 2 min = 120sec
+				//** Save cookie user variables. set cookie to expire in 15 min = 900sec
 				Cookie userName =  new Cookie("username", farmer.getEmail());
-				userName.setMaxAge(120);
+				userName.setMaxAge(900);
 				resp.addCookie(userName);
 				
 				//Redirect to the home page
 				//resp.sendRedirect("index");
-				redirectAttributes.addFlashAttribute("message", session.getAttribute("username") + " created.");			
+				//redirectAttributes.addFlashAttribute("message", session.getAttribute("username") + " created.");			
 			}	
 			
 			return mv;
@@ -177,15 +177,15 @@ public class LoginController extends HttpServlet {
 					mv = new ModelAndView("redirect:/farmers");
 					//redirectAttributes.addFlashAttribute("message", farmer.getEmail() + " connected");
 					
-					//** Save session user variables. set session to expire in 2 min = 120sec
+					//** Save session user variables. set session to expire in 2 min = 900sec
 					session.setAttribute("username", farmer.getEmail());
 					session.setAttribute("pass", farmer.getPassword());
 					session.setAttribute("name", farmer.getFirstName() + " " + farmer.getLastName());
-					session.setMaxInactiveInterval(120);
+					session.setMaxInactiveInterval(900);
 					
-					//** Save cookie user variables. set cookie to expire in 2 min = 120sec
+					//** Save cookie user variables. set cookie to expire in 2 min = 900sec
 					Cookie userName =  new Cookie("username", farmer.getEmail());
-					userName.setMaxAge(120);
+					userName.setMaxAge(900);
 					resp.addCookie(userName);
 				}
 			}

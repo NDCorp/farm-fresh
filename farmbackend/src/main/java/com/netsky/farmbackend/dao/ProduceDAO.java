@@ -8,7 +8,7 @@ import com.netsky.farmbackend.dto.Produce;
 public interface ProduceDAO {
 	public List<Produce> list();
 
-	public List<Produce> listFarmerProduce(Farmer farmer);
+	public List<Produce> listFarmerProduce(int farmer);
 	
 	public Produce get(int produce);
 

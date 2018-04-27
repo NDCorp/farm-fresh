@@ -18,6 +18,7 @@ public class ProduceDAOImpl implements ProduceDAO{
 	@Autowired private SessionFactory sessionFactory;
 	
 	//List of all active produce
+	@Override
 	public List<Produce> list() {
 		
 		String selectAllProduce = "FROM Produce WHERE IsActive =:active"; 
@@ -28,12 +29,13 @@ public class ProduceDAOImpl implements ProduceDAO{
 	}
 
 	//List of all active produce for a farmer
-	public List<Produce> listFarmerProduce(Farmer farmer) {
+	@Override
+	public List<Produce> listFarmerProduce(int farmerId) {
 		
-		String selectAllProduce = "FROM Produce WHERE IsActive =:active AND Farmer =:farmer"; 
+		String selectAllProduce = "FROM Produce WHERE IsActive =:active AND farmer.id =:farmerId"; 
 		Query query = sessionFactory.getCurrentSession().createQuery(selectAllProduce);
 		query.setParameter("active", true);
-		query.setParameter("farmer", farmer);
+		query.setParameter("farmerId", farmerId);
 		
 		return query.getResultList();
 	}

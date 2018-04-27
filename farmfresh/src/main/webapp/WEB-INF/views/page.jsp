@@ -21,7 +21,7 @@
     -->
 	<title>Farm Fresh - ${title}</title>
 	<script>
-		window.menu = '${title}';
+		window.menu = '${contextRoot}';
 		window.contextRoot = '${contextRoot}'; 
 	</script>
     <!-- Icon must be changed, Ref from: https://pngtree.com/freepng/farm_733892.html -->
