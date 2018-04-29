@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.netsky.farmbackend.dao.ProduceDAO;
 import com.netsky.farmbackend.dto.Farmer;
 import com.netsky.farmbackend.dto.Produce;
+import com.netsky.farmbackend.dto.Product;
 
 @Repository("ProduceDAO")
 @Transactional
@@ -38,6 +39,17 @@ public class ProduceDAOImpl implements ProduceDAO{
 		query.setParameter("farmerId", farmerId);
 		
 		return query.getResultList();
+	}
+	
+	@Override
+	public List<Produce> listActiveProductsByCategory(int categoryId) {
+		String selectActiveProductsByCategory = "FROM Produce WHERE IsActive = :active AND category.id = :categoryId";
+		return sessionFactory
+				.getCurrentSession()
+					.createQuery(selectActiveProductsByCategory, Produce.class)
+						.setParameter("active", true)
+						.setParameter("categoryId", categoryId)
+							.getResultList();
 	}
 	
 	//Retrieve a Produce based on its ID 

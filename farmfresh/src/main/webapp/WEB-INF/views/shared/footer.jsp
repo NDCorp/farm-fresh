@@ -7,7 +7,7 @@
         <div class="row">
           <div class="col-md ftco-animate">
             <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">[PlatformName]</h2>
+              <h2 class="ftco-heading-2">Farm Fresh</h2>
               <ul class="list-unstyled">
                 <li><a href="#" class="py-2 d-block">About Us</a></li>
                 <li><a href="#" class="py-2 d-block">Contact</a></li>
@@ -39,7 +39,7 @@
     </div>
     <div class="row ftco-animate">
       <div class="col-md text-left">
-        <p>&copy; [PlatformName] 2018. All Rights Reserved.  
+        <p>&copy; Farm Fresh 2018. All Rights Reserved.  
           <!--Made with <span class="icon-heart text-danger"></span>  by <a href="#">Free-Template.co</a>-->
         </p>
       </div>

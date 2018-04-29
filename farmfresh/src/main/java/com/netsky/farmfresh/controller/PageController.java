@@ -41,6 +41,7 @@ import com.netsky.farmbackend.dto.Category;
 import com.netsky.farmbackend.dto.Farmer;
 import com.netsky.farmbackend.dto.Picture;
 import com.netsky.farmbackend.dto.Produce;
+import com.netsky.farmbackend.dto.Product;
 import com.netsky.farmbackend.dto.UserType;
 import com.netsky.farmfresh.exception.ProductNotFoundException;
 import com.netsky.farmfresh.tools.controller.ToolBox;
@@ -61,7 +62,11 @@ public class PageController {
 	@Autowired UserTypeDAO userTypeDAO;
 	@Autowired BuyerDAO buyerDAO;
 	@Autowired FarmerDAO farmerDAO;
+//<<<<<<< HEAD
 	@Autowired ServletContext context;
+//=======
+	@Autowired ProductDAO productDao;
+//>>>>>>> branch 'master' of https://github.com/amrinderkalsi/farm-fresh.git
 	
 	@RequestMapping(value = {"/", "/home", "/index"})	//, method = RequestMethod.GET
 	public ModelAndView index(HttpServletRequest req, HttpServletResponse resp) 
@@ -88,15 +93,15 @@ public class PageController {
 			if (access_token != null && !access_token.isEmpty()) {
 				buyer = GetFBData(access_token);
 				
-				//** Save session user variables. set session to expire in 2 min = 120sec
+				//** Save session user variables. set session to expire in 15 min = 900
 				session.setAttribute("username", buyer.getEmail());
 				session.setAttribute("pass", buyer.getPassword());	//fake password
 				session.setAttribute("name", buyer.getFirstName());
-				session.setMaxInactiveInterval(120);
+				session.setMaxInactiveInterval(900);
 				
-				//** Save cookie user variables. set cookie to expire in 2 min = 120sec
+				//** Save cookie user variables. set cookie to expire in 15 min = 900
 				Cookie userName =  new Cookie("username", buyer.getEmail());
-				userName.setMaxAge(120);
+				userName.setMaxAge(900);
 				resp.addCookie(userName); 
 			}
 		}
@@ -107,6 +112,8 @@ public class PageController {
 		
 		//passing the list of category
 		mv.addObject("categories", categoryDAO.list());
+		//mv.addObject("products",  productDao.listActiveProducts());
+		mv.addObject("products",  produceDAO.list());
 		mv.addObject("userClickedHome", true);
 		return mv;
 	}	
@@ -345,6 +352,8 @@ public class PageController {
 		
 		//passing the list of category
 		mv.addObject("categories", categoryDAO.list());
+		//mv.addObject("products",  productDao.listActiveProducts());
+		mv.addObject("products",  produceDAO.list());
 		mv.addObject("userClickedAllProducts", true);
 		return mv;
 	}
@@ -365,7 +374,8 @@ public class PageController {
 		
 		//passing the single category
 		mv.addObject("category", category);
-		
+		//mv.addObject("products", productDao.listActiveProductsByCategory(id));
+		mv.addObject("products", produceDAO.listActiveProductsByCategory(id));
 		mv.addObject("userClickedCategoryProducts", true);
 		return mv;
 	}
@@ -373,19 +383,20 @@ public class PageController {
 	/*
 	 * Viewing a single product
 	 * */
-	/*
+	
 	@RequestMapping(value = "/show/{id}/product")
 	public ModelAndView showSingleProduct(@PathVariable int id) throws ProductNotFoundException {
 		ModelAndView mv = new ModelAndView("page");
-		Product product = productDAO.get(id);
+		//Product product = productDAO.get(id);
+		Produce product = produceDAO.get(id);
 		
 		if(product == null) {
 			throw new ProductNotFoundException();
 		}
 		
 		//update the view count
-		product.setViews(product.getViews()+1);		
-		productDAO.update(product);
+		//product.setViews(product.getViews()+1);		
+		produceDAO.update(product);
 		
 		mv.addObject("title", product.getName());
 		mv.addObject("product",product);
@@ -393,6 +404,6 @@ public class PageController {
 				
 		return mv;
 	}
-	*/
+	
 	
 }

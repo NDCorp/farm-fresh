@@ -2,20 +2,20 @@
 
 	<!-- Breadcrumb -->
 	<div class="row">
-		<div class="col-xs-12">
+		<%-- <div class="col-xs-12">
 			<ol class="breadcrumb">
 				<li><a href="${contextRoot}/home">Home</a></li>&nbsp;|&nbsp;
 				<li><a href="${contextRoot}/show/all/products">Products</a></li>&nbsp;|&nbsp; 
 				<li class="active">${product.name}</li>
 			</ol>
-		</div>
+		</div> --%>
 	</div>
-
+<!-- product.code -->
 	<div class="row">
 		<!-- Display the product image -->
 		<div class="col-xs-12 col-sm-4">
 			<div class="thumbnail">
-				<img src="${images}/${product.code}.jpg" class="img img-responsive" style="width:350px; height: 400px;"/>
+				<img src="${images}/menu_1.jpg" class="img img-responsive" style="width:350px; height: 400px;"/>
 			</div>
 		</div>
 		

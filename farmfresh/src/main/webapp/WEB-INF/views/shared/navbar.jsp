@@ -14,10 +14,10 @@
   <c:set var="uName" scope="session" value="<%=userName %>"/> 
   
   <div class="container">
-    <a class="navbar-brand" href="index.html">
+    <a class="navbar-brand" href="${contextRoot}/index">
       <!-- Logo must be changed, Ref from: https://pngtree.com/freepng/farm_733892.html -->
       <img src="${images}/logo_transp.png" alt="Logo">
-      <span>[PlatformName]</span>
+      <span>Farm Fresh</span>
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,10 +26,13 @@
 
     <div class="collapse navbar-collapse" id="ftco-nav">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active"><a href="${contextRoot}/index.html" class="nav-link">Home</a></li>
+        <li class="nav-item active"><a href="${contextRoot}/index" class="nav-link">Home</a></li>
         <c:if test="${not empty uName}">
         	<li class="nav-item"><a href="${contextRoot}/farmers.html" class="nav-link">Farmers</a></li>
         </c:if>
+        <li class="nav-item" id="listProducts">
+                <a href="${contextRoot}/show/all/products"  class="nav-link">View Products</a>
+		</li>
         <li class="nav-item"><a href="#section-menu" class="nav-link">Produce</a></li>
         <li class="nav-item"><a href="#section-news" class="nav-link">Featured</a></li>
         <!-- <li class="nav-item"><a href="${contextRoot}/contact.html" class="nav-link">Contact</a></li> -->
